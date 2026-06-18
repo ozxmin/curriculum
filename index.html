@@ -45,7 +45,14 @@
     display: flex; align-items: center; justify-content: space-between;
     height: 56px;
   }
-  .nav-logo { font-weight: 700; font-size: 1rem; letter-spacing: -.3px; }
+  .nav-logo { 
+    font-weight: 700; font-size: 1rem; letter-spacing: -.3px; 
+  }
+  .nav-logo a { 
+    text-decoration: none;
+    color: var(--muted);
+    transition: color .2s;    
+  }
   .nav-links { display: flex; gap: 1.5rem; }
   .nav-links a {
     color: var(--muted);
@@ -184,11 +191,13 @@
 <body>
 
 <nav>
-  <span class="nav-logo">Osmin Vazquez</span>
+  <span class="nav-logo">
+    <a href="#" onclick="showPage('home')">Osmin Vazquez</a>
+  </span>
   <div class="nav-links">
-    <a href="#" onclick="showPage('home')">Home</a>
-    <a href="#" onclick="showPage('uses')">Uses</a>
-    <a href="#" onclick="showPage('writing')">Writing</a>
+    <!-- <a href="#" onclick="showPage('home')">Home</a> -->
+    <!-- <a href="#" onclick="showPage('uses')">Uses</a> -->
+    <!-- <a href="#" onclick="showPage('writing')">Writing</a> -->
   </div>
 </nav>
 
@@ -199,10 +208,10 @@
     <p class="hero-label">iOS Developer</p>
     <h1>Osmin<br/>Vazquez</h1>
     <p>8+ years building iOS apps end-to-end — architecture, stakeholder alignment, and shipping to the App Store. I specialize in modernizing legacy codebases and keeping production stable.</p>
-    <div class="hero-links">
+    <!-- <div class="hero-links">
       <a class="btn btn-primary" href="mailto:ozxmin@me.com">Get in touch</a>
       <button class="btn btn-outline" onclick="showPage('uses')">My Stack →</button>
-    </div>
+    </div> -->
   </div>
 
   <!-- EXPERIENCE -->
@@ -333,8 +342,8 @@
     <h2>Contact</h2>
     <div class="contact-list">
       <div class="contact-item"><span>Email</span><a href="mailto:ozxmin@me.com">ozxmin@me.com</a></div>
-      <div class="contact-item"><span>Phone</span><span>+52 331 274 1283</span></div>
-      <div class="contact-item"><span>Web</span><a href="https://career.ozmin.me">career.ozmin.me</a></div>
+      <div class="contact-item"><span>Phone</span>+52 331 274 1283</div>
+      <div class="contact-item"><span>Github</span><a href="github.com/ozxmin">github.com/ozxmin</a></div>
     </div>
   </section>
 
