@@ -4,219 +4,166 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Osmin Vazquez · iOS Developer</title>
-<style>
-  :root {
-    --bg: #ffffff;
-    --bg2: #f4f4f5;
-    --text: #09090b;
-    --muted: #71717a;
-    --accent: #2563eb;
-    --border: #e4e4e7;
-    --tag-bg: #eff6ff;
-    --tag-text: #1d4ed8;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #09090b;
-      --bg2: #18181b;
-      --text: #fafafa;
-      --muted: #a1a1aa;
-      --accent: #60a5fa;
-      --border: #27272a;
-      --tag-bg: #1e3a5f;
-      --tag-text: #93c5fd;
-    }
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    font-size: 15px;
-  }
-
-  /* NAV */
-  nav {
-    position: sticky; top: 0; z-index: 50;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
-    padding: 0 2rem;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 56px;
-  }
-  .nav-logo { 
-    font-weight: 700; font-size: 1rem; letter-spacing: -.3px; 
-  }
-  .nav-logo a { 
-    text-decoration: none;
-    color: var(--muted);
-    transition: color .2s;    
-  }
-  .nav-links { display: flex; gap: 1.5rem; }
-  .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: .875rem;
-    transition: color .2s;
-  }
-  .nav-links a:hover { color: var(--accent); }
-
-  /* PAGES */
-  .page { display: none; }
-  .page.active { display: block; }
-
-  /* HERO */
-  .hero {
-    max-width: 720px; margin: 0 auto;
-    padding: 5rem 2rem 3rem;
-  }
-  .hero-label {
-    font-size: .75rem; font-weight: 600; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--accent);
-    margin-bottom: .75rem;
-  }
-  .hero h1 {
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 800; letter-spacing: -.5px;
-    line-height: 1.1; margin-bottom: 1rem;
-  }
-  .hero p {
-    font-size: 1.05rem; color: var(--muted);
-    max-width: 560px; margin-bottom: 2rem;
-  }
-  .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn {
-    display: inline-flex; align-items: center; gap: .4rem;
-    padding: .55rem 1.2rem; border-radius: 8px;
-    font-size: .875rem; font-weight: 500;
-    text-decoration: none; transition: all .2s; cursor: pointer;
-    border: none;
-  }
-  .btn-primary { background: var(--accent); color: #fff; }
-  .btn-primary:hover { opacity: .85; }
-  .btn-outline {
-    border: 1px solid var(--border);
-    background: transparent; color: var(--text);
-  }
-  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-
-  /* SECTION */
-  section {
-    max-width: 720px; margin: 0 auto;
-    padding: 2rem 2rem;
-    border-top: 1px solid var(--border);
-  }
-  section h2 {
-    font-size: .7rem; font-weight: 700; letter-spacing: .12em;
-    text-transform: uppercase; color: var(--muted);
-    margin-bottom: 1.5rem;
-  }
-
-  /* EXPERIENCE */
-  .job { margin-bottom: 2rem; }
-  .job-header {
-    display: flex; justify-content: space-between;
-    align-items: baseline; flex-wrap: wrap; gap: .5rem;
-    margin-bottom: .25rem;
-  }
-  .job-title { font-weight: 700; font-size: 1rem; }
-  .job-meta { font-size: .8rem; color: var(--muted); }
-  .job ul { list-style: none; padding: 0; margin-top: .5rem; }
-  .job ul li {
-    padding: .2rem 0 .2rem 1rem;
-    position: relative; color: var(--muted); font-size: .9rem;
-  }
-  .job ul li::before {
-    content: '→'; position: absolute; left: 0;
-    color: var(--accent); font-size: .75rem; top: .3rem;
-  }
-
-  /* SKILLS */
-  .skill-group { margin-bottom: 1.25rem; }
-  .skill-group-label {
-    font-size: .75rem; font-weight: 600;
-    color: var(--muted); margin-bottom: .5rem;
-  }
-  .tags { display: flex; flex-wrap: wrap; gap: .4rem; }
-  .tag {
-    background: var(--tag-bg); color: var(--tag-text);
-    font-size: .75rem; font-weight: 500;
-    padding: .25rem .6rem; border-radius: 6px;
-  }
-
-  /* CONTACT */
-  .contact-list { display: flex; flex-direction: column; gap: .75rem; }
-  .contact-item {
-    display: flex; gap: .75rem; align-items: center;
-    font-size: .9rem;
-  }
-  .contact-item span { color: var(--muted); width: 70px; }
-  .contact-item a { color: var(--accent); text-decoration: none; }
-  .contact-item a:hover { text-decoration: underline; }
-
-  /* INNER PAGE */
-  .inner-page {
-    max-width: 720px; margin: 0 auto;
-    padding: 3rem 2rem;
-  }
-  .back-btn {
-    display: inline-flex; align-items: center; gap: .4rem;
-    color: var(--muted); font-size: .875rem;
-    text-decoration: none; margin-bottom: 2rem;
-    cursor: pointer; background: none; border: none;
-    transition: color .2s;
-  }
-  .back-btn:hover { color: var(--accent); }
-  .inner-page h1 { font-size: 1.75rem; font-weight: 800; margin-bottom: .5rem; }
-  .inner-page .subtitle { color: var(--muted); margin-bottom: 2rem; }
-  .inner-page p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
-
-  /* EDUCATION */
-  .edu {
-    display: flex; justify-content: space-between;
-    align-items: baseline; flex-wrap: wrap;
-  }
-  .edu-name { font-weight: 600; }
-  .edu-meta { color: var(--muted); font-size: .85rem; }
-
-  footer {
-    text-align: center; padding: 3rem 2rem;
-    font-size: .8rem; color: var(--muted);
-    border-top: 1px solid var(--border);
-    max-width: 720px; margin: 0 auto;
-  }
-</style>
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
 <nav>
   <span class="nav-logo">
-    <a href="#" onclick="showPage('home')">Osmin Vazquez</a>
+    <a href="index.html">Osmin Vazquez</a>
   </span>
   <div class="nav-links">
-    <!-- <a href="#" onclick="showPage('home')">Home</a> -->
-    <!-- <a href="#" onclick="showPage('uses')">Uses</a> -->
-    <!-- <a href="#" onclick="showPage('writing')">Writing</a> -->
+    <a href="my-stack.html">My Stack</a>
   </div>
 </nav>
 
-<!-- ═══════════════ HOME PAGE ═══════════════ -->
-<div id="home" class="page active">
+<div class="hero">
+  <p class="hero-label">iOS Developer</p>
+  <h1>Osmin<br/>Vazquez</h1>
+  <p>8+ years building iOS apps end-to-end — architecture, stakeholder alignment, and shipping to the App Store. I specialize in modernizing legacy codebases and keeping production stable.</p>
+  <div class="hero-links">
+    <a class="btn btn-primary" href="mailto:ozxmin@me.com">Get in touch</a>
+    <a class="btn btn-outline" href="my-stack.html">My Stack →</a>
+  </div>
+</div>
 
-  <div class="hero">
-    <p class="hero-label">iOS Developer</p>
-    <h1>Osmin<br/>Vazquez</h1>
-    <p>8+ years building iOS apps end-to-end — architecture, stakeholder alignment, and shipping to the App Store. I specialize in modernizing legacy codebases and keeping production stable.</p>
-    <!-- <div class="hero-links">
-      <a class="btn btn-primary" href="mailto:ozxmin@me.com">Get in touch</a>
-      <button class="btn btn-outline" onclick="showPage('uses')">My Stack →</button>
-    </div> -->
+<!-- EXPERIENCE -->
+<section>
+  <h2>Experience</h2>
+
+  <div class="job">
+    <div class="job-header">
+      <span class="job-title">iOS Principal · Children's Hospital of Philadelphia</span>
+      <span class="job-meta">2025 — 2026</span>
+    </div>
+    <ul>
+      <li>Shipped a medical research app with real-time data pipeline, hardware polling, Azure Cosmos DB persistence, and live peak detection on SwiftUI charts.</li>
+      <li>Architected a Clean Architecture + SOLID codebase, using agentic tools to sustain high delivery velocity.</li>
+    </ul>
   </div>
 
-  <!-- EXPERIENCE -->
-  <section>
-    <h2>Experience</h2>
+  <div class="job">
+    <div class="job-header">
+      <span class="job-title">iOS Product Developer · Bomart</span>
+      <span class="job-meta">2024 — 2025</span>
+    </div>
+    <ul>
+      <li>Managed full project lifecycle: proposal, contracts, and delivery.</li>
+      <li>Designed and launched a custom iOS 17+ app with auth, transaction notifications, and Apple Business Manager deployment.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="job-header">
+      <span class="job-title">Lead iOS Developer · DigInn</span>
+      <span class="job-meta">2022 — 2023</span>
+    </div>
+    <ul>
+      <li>Reduced crashes to near-zero via CI/CD across 20+ releases.</li>
+      <li>Migrated legacy Intel project to Apple Silicon, unblocking team velocity.</li>
+      <li>Implemented analytics, A/B testing, and push notifications with Firebase.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="job-header">
+      <span class="job-title">Senior iOS Dev · Numerator</span>
+      <span class="job-meta">2021 — 2022</span>
+    </div>
+    <ul>
+      <li>Bridged Objective-C to Swift and led SwiftUI + Combine introduction.</li>
+      <li>Defined and enforced MVVM + Rx architecture. Reduced tech debt to bump deployment targets.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="job-header">
+      <span class="job-title">iOS Dev II · Royal Caribbean</span>
+      <span class="job-meta">2019 — 2021</span>
+    </div>
+    <ul>
+      <li>Built user features with UIKit and VisionKit across multiple teams.</li>
+      <li>Contributed to backend migration while keeping reusable code across brands.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="job-header">
+      <span class="job-title">iOS Dev + Tech-Lead MX · BBVA</span>
+      <span class="job-meta">2018 — 2019</span>
+    </div>
+    <ul>
+      <li>Developed key features using VIPER, RxSwift, and strict code coverage.</li>
+      <li>Coordinated international teams and led interviews + onboarding.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="job-header">
+      <span class="job-title">Back-End + Infra · Connected B2B</span>
+      <span class="job-meta">2017 — 2018</span>
+    </div>
+    <ul>
+      <li>Established AWS infrastructure and designed APIs with Node.js + MongoDB.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section>
+  <h2>Education</h2>
+  <div class="edu">
+    <div>
+      <div class="edu-name">B.S. Computer Science · Metropolitan Autonomous University</div>
+      <div class="edu-meta">Cum Laude</div>
+    </div>
+    <span class="edu-meta">2013 — 2018</span>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section>
+  <h2>Skills</h2>
+  <div class="skill-group">
+    <div class="skill-group-label">Frameworks & APIs</div>
+    <div class="tags">
+      <span class="tag">SwiftUI</span><span class="tag">UIKit</span><span class="tag">Combine</span>
+      <span class="tag">SwiftData</span><span class="tag">XCTest</span><span class="tag">Swift Testing</span>
+      <span class="tag">VisionKit</span><span class="tag">MapKit</span><span class="tag">CoreLocation</span>
+      <span class="tag">GCD</span><span class="tag">Foundation</span><span class="tag">Observation</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-group-label">Architecture & Patterns</div>
+    <div class="tags">
+      <span class="tag">MVVM</span><span class="tag">VIPER</span><span class="tag">Clean Architecture</span>
+      <span class="tag">SOLID</span><span class="tag">TDD</span><span class="tag">Structured Concurrency</span>
+      <span class="tag">Rx</span><span class="tag">MVC</span><span class="tag">MVP</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-group-label">Tooling</div>
+    <div class="tags">
+      <span class="tag">CI/CD</span><span class="tag">Fastlane</span><span class="tag">XcodeGen</span>
+      <span class="tag">Instruments</span><span class="tag">LLDB</span><span class="tag">Firebase</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section>
+  <h2>Contact</h2>
+  <div class="contact-list">
+    <div class="contact-item"><span>Email</span><a href="mailto:ozxmin@me.com">ozxmin@me.com</a></div>
+    <div class="contact-item"><span>Phone</span>+52 331 274 1283</div>
+    <div class="contact-item"><span>Github</span><a href="github.com/ozxmin">github.com/ozxmin</a></div>
+  </div>
+</section>
+
+<footer>Osmin Vazquez · iOS Developer · Guadalajara, MX</footer>
+
+</body>
+</html>
 
     <div class="job">
       <div class="job-header">
@@ -337,69 +284,16 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section>
-    <h2>Contact</h2>
-    <div class="contact-list">
-      <div class="contact-item"><span>Email</span><a href="mailto:ozxmin@me.com">ozxmin@me.com</a></div>
-      <div class="contact-item"><span>Phone</span>+52 331 274 1283</div>
-      <div class="contact-item"><span>Github</span><a href="github.com/ozxmin">github.com/ozxmin</a></div>
-    </div>
-  </section>
-
-  <footer>Osmin Vazquez · iOS Developer · Guadalajara, MX</footer>
-</div>
-
-
-<!-- ═══════════════ USES PAGE (example inner page) ═══════════════ -->
-<div id="uses" class="page">
-  <div class="inner-page">
-    <button class="back-btn" onclick="showPage('home')">← Back to home</button>
-    <h1>My Stack</h1>
-    <p class="subtitle">Tools and gear I use daily.</p>
-
-    <div class="skill-group" style="margin-bottom:1.5rem">
-      <div class="skill-group-label">Editor & Terminal</div>
-      <div class="tags">
-        <span class="tag">Xcode</span><span class="tag">VS Code</span>
-        <span class="tag">iTerm2</span><span class="tag">Oh My Zsh</span>
-      </div>
-    </div>
-    <div class="skill-group" style="margin-bottom:1.5rem">
-      <div class="skill-group-label">Dev Tools</div>
-      <div class="tags">
-        <span class="tag">Fastlane</span><span class="tag">XcodeGen</span>
-        <span class="tag">Bundler</span><span class="tag">Homebrew</span><span class="tag">Git</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-label">Hardware</div>
-      <div class="tags">
-        <span class="tag">MacBook Pro</span><span class="tag">iPhone</span>
-      </div>
-    </div>
+  <h2>Contact</h2>
+  <div class="contact-list">
+    <div class="contact-item"><span>Email</span><a href="mailto:ozxmin@me.com">ozxmin@me.com</a></div>
+    <div class="contact-item"><span>Phone</span>+52 331 274 1283</div>
+    <div class="contact-item"><span>Github</span><a href="github.com/ozxmin">github.com/ozxmin</a></div>
   </div>
-</div>
+</section>
 
-
-<!-- ═══════════════ WRITING PAGE (example inner page) ═══════════════ -->
-<div id="writing" class="page">
-  <div class="inner-page">
-    <button class="back-btn" onclick="showPage('home')">← Back to home</button>
-    <h1>Writing</h1>
-    <p class="subtitle">Thoughts on iOS dev, architecture, and tooling.</p>
-    <p>Nothing here yet — but this is where posts would live. Each one can be its own section or page.</p>
-  </div>
-</div>
-
-
-<script>
-  function showPage(id) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    window.scrollTo(0, 0);
-  }
-</script>
+<footer>Osmin Vazquez · iOS Developer · Guadalajara, MX</footer>
 
 </body>
 </html>
