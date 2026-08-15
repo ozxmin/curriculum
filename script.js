@@ -5,42 +5,38 @@ function closeAllDisclosure() {
 
   document.querySelectorAll('.inline-panel').forEach((panel) => {
     panel.classList.remove('open');
+    panel.setAttribute('aria-hidden', 'true');
   });
 }
 
-function positionBubble(trigger) {
-  const panel = document.getElementById(trigger.dataset.target);
+function setDisclosureState(button, shouldOpen) {
+  const panel = document.getElementById(button.dataset.target);
   if (!panel) return;
 
-  const parentRect = trigger.parentElement.getBoundingClientRect();
-  const triggerRect = trigger.getBoundingClientRect();
-  const left = triggerRect.left - parentRect.left + (trigger.offsetWidth / 2);
-  const top = triggerRect.top - parentRect.top;
+  button.setAttribute('aria-expanded', String(shouldOpen));
+  panel.classList.toggle('open', shouldOpen);
+  panel.setAttribute('aria-hidden', String(!shouldOpen));
 
-  panel.style.left = `${left}px`;
-  panel.style.top = `${top}px`;
+  if (shouldOpen) {
+    const container = button.closest('.inline-details');
+    const buttonRect = button.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    const left = buttonRect.left - containerRect.left + (button.offsetWidth / 2);
+    const top = buttonRect.top - containerRect.top;
+
+    panel.style.left = `${left}px`;
+    panel.style.top = `${top}px`;
+  }
 }
 
-function toggleDisclosure(trigger) {
-  const targetId = trigger.dataset.target;
-  const targetPanel = document.getElementById(targetId);
-  const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+function toggleDisclosure(button) {
+  const isExpanded = button.getAttribute('aria-expanded') === 'true';
 
-  document.querySelectorAll('.inline-trigger').forEach((button) => {
-    const buttonPanel = document.getElementById(button.dataset.target);
-    const shouldOpen = button === trigger && !isExpanded;
-
-    button.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
-    if (buttonPanel) {
-      buttonPanel.classList.toggle('open', shouldOpen);
-      if (shouldOpen) positionBubble(button);
-    }
+  document.querySelectorAll('.inline-trigger').forEach((trigger) => {
+    const shouldOpen = trigger === button && !isExpanded;
+    setDisclosureState(trigger, shouldOpen);
   });
-
-  if (targetPanel) {
-    targetPanel.classList.toggle('open', !isExpanded);
-    if (!isExpanded) positionBubble(trigger);
-  }
 }
 
 document.addEventListener('click', (event) => {
@@ -53,7 +49,18 @@ document.addEventListener('click', (event) => {
     return;
   }
 
-  if (!clickedTrigger && !clickedPanel) {
+  if (clickedTrigger) {
+    toggleDisclosure(clickedTrigger);
+    return;
+  }
+
+  if (!clickedPanel) {
+    closeAllDisclosure();
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
     closeAllDisclosure();
   }
 });
@@ -70,6 +77,14 @@ document.addEventListener('scroll', () => {
 
 window.addEventListener('resize', () => {
   document.querySelectorAll('.inline-trigger[aria-expanded="true"]').forEach((button) => {
-    positionBubble(button);
+    const panel = document.getElementById(button.dataset.target);
+    if (!panel) return;
+
+    const container = button.closest('.inline-details');
+    const buttonRect = button.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    panel.style.left = `${buttonRect.left - containerRect.left + (button.offsetWidth / 2)}px`;
+    panel.style.top = `${buttonRect.top - containerRect.top}px`;
   });
 });
