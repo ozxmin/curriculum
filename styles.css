@@ -71,7 +71,7 @@ nav {
 
 .hero-label {
   font-size: .75rem; font-weight: 600; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--accent);
+  color: var(--accent);
   margin-bottom: .75rem;
 }
 
