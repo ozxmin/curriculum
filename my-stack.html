@@ -45,41 +45,50 @@
     </div>
   </div>
 
-  <!-- Disclosure Examples -->
-  <div style="margin-top: 2rem;">
+  <div class="inline-details" style="margin-top: 2rem;">
     <h3 style="font-size: 0.85rem; font-weight: 600; color: var(--muted); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">More Details</h3>
-    
-    <div class="disclosure">
-      <button class="disclosure-trigger" aria-expanded="false" onclick="toggleDisclosure(this)">Why I chose this stack</button>
-      <div class="disclosure-content">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      </div>
+
+    <p class="inline-line">
+      My stack is built for
+      <button type="button" class="inline-trigger" aria-expanded="false" aria-controls="stack-speed" data-target="stack-speed" onclick="toggleDisclosure(this)">speed</button>,
+      <button type="button" class="inline-trigger" aria-expanded="false" aria-controls="stack-clarity" data-target="stack-clarity" onclick="toggleDisclosure(this)">clarity</button>,
+      and <button type="button" class="inline-trigger" aria-expanded="false" aria-controls="stack-setup" data-target="stack-setup" onclick="toggleDisclosure(this)">repeatability</button>.
+      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+
+    <div id="stack-speed" class="inline-panel" aria-live="polite">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
     </div>
 
-    <div class="disclosure">
-      <button class="disclosure-trigger" aria-expanded="false" onclick="toggleDisclosure(this)">Setup process & configurations</button>
-      <div class="disclosure-content">
-        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-      </div>
+    <div id="stack-clarity" class="inline-panel" aria-live="polite">
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </div>
 
-    <div class="disclosure">
-      <button class="disclosure-trigger" aria-expanded="false" onclick="toggleDisclosure(this)">Performance tips & tricks</button>
-      <div class="disclosure-content">
-        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-      </div>
+    <div id="stack-setup" class="inline-panel" aria-live="polite">
+      <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
     </div>
   </div>
 </div>
 
 <script>
   function toggleDisclosure(trigger) {
+    const targetId = trigger.dataset.target;
+    const targetPanel = document.getElementById(targetId);
     const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
-    const content = trigger.nextElementSibling;
-    
-    trigger.setAttribute('aria-expanded', !isExpanded);
-    content.classList.toggle('open');
+
+    document.querySelectorAll('.inline-trigger').forEach((button) => {
+      const buttonPanel = document.getElementById(button.dataset.target);
+      const shouldOpen = button === trigger && !isExpanded;
+
+      button.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+      if (buttonPanel) {
+        buttonPanel.classList.toggle('open', shouldOpen);
+      }
+    });
+
+    if (targetPanel) {
+      targetPanel.classList.toggle('open', !isExpanded);
+    }
   }
 </script>
 

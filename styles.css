@@ -214,42 +214,80 @@ footer {
   max-width: 720px; margin: 0 auto;
 }
 
-/* DISCLOSURE */
-.disclosure {
-  margin: 1rem 0;
+.inline-details {
+  margin-top: 2rem;
 }
 
-.disclosure-trigger {
-  display: inline-flex; align-items: center; gap: .5rem;
-  color: var(--accent); text-decoration: none;
-  font-size: .9rem; cursor: pointer; background: none; border: none;
-  padding: 0; font-family: inherit;
-  transition: opacity .2s;
+.inline-line {
+  max-width: 42rem;
+  color: var(--muted);
+  line-height: 1.9;
+  margin-bottom: 1rem;
 }
 
-.disclosure-trigger:hover { text-decoration: underline; opacity: .8; }
-
-.disclosure-trigger::before {
-  content: '▶'; display: inline-block;
-  transition: transform .2s; font-size: .65rem;
+.inline-trigger {
+  display: inline-block;
+  position: relative;
+  padding: .08rem .5rem .12rem;
+  margin: 0 .08rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.04);
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: all .2s ease;
+  vertical-align: baseline;
 }
 
-.disclosure-trigger[aria-expanded="true"]::before {
-  transform: rotate(90deg);
+.inline-trigger:hover {
+  background: rgba(37, 99, 235, 0.08);
+  border-color: rgba(37, 99, 235, 0.2);
 }
 
-.disclosure-content {
-  max-height: 0; overflow: hidden; opacity: 0;
-  transition: max-height .2s, opacity .2s;
-  padding-left: 1.5rem;
-  margin-top: .5rem;
+.inline-trigger::after {
+  content: '▾';
+  display: inline-block;
+  margin-left: .25rem;
+  font-size: .68rem;
+  transform: translateY(-1px);
+  transition: transform .2s ease;
 }
 
-.disclosure-content.open {
-  max-height: 500px; opacity: 1;
+.inline-trigger[aria-expanded="true"] {
+  background: rgba(37, 99, 235, 0.1);
+  border-color: rgba(37, 99, 235, 0.35);
 }
 
-.disclosure-content p {
-  color: var(--muted); font-size: .9rem; line-height: 1.6;
+.inline-trigger[aria-expanded="true"]::after {
+  transform: rotate(180deg) translateY(-1px);
+}
+
+.inline-panel {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin-top: 0;
+  transition: max-height .25s ease, opacity .2s ease, margin-top .2s ease;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0 1rem;
+}
+
+.inline-panel.open {
+  max-height: 260px;
+  opacity: 1;
+  margin-top: .6rem;
+  padding-top: 1rem;
+  padding-bottom: 0.25rem;
+}
+
+.inline-panel p {
+  color: var(--muted);
+  font-size: .9rem;
+  line-height: 1.6;
   margin-bottom: .75rem;
 }
