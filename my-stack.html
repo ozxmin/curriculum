@@ -3,34 +3,66 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 <title>My Stack · Osmin Vazquez</title>
+<meta name="description" content="The editor, terminal, dev tools, and hardware Osmin Vazquez uses daily for iOS development." />
+<meta name="author" content="Osmin Vazquez" />
+<link rel="canonical" href="https://career.ozmin.me/my-stack.html" />
+
+<!-- Open Graph / LinkedIn -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Osmin Vazquez" />
+<meta property="og:title" content="My Stack · Osmin Vazquez" />
+<meta property="og:description" content="The editor, terminal, dev tools, and hardware I use daily for iOS development." />
+<meta property="og:url" content="https://career.ozmin.me/my-stack.html" />
+<meta property="og:image" content="https://career.ozmin.me/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Osmin Vazquez — iOS Developer — career.ozmin.me" />
+
+<!-- Twitter/X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="My Stack · Osmin Vazquez" />
+<meta name="twitter:description" content="The editor, terminal, dev tools, and hardware I use daily for iOS development." />
+<meta name="twitter:image" content="https://career.ozmin.me/og-image.png" />
+
+<!-- Icons -->
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#09090b" />
+
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
+<a class="skip-link" href="#main">Skip to content</a>
 
 <nav>
   <span class="nav-logo">
     <a href="index.html">Osmin Vazquez</a>
   </span>
   <div class="nav-links">
-    <a href="my-stack.html">My Stack</a>
+    <a href="my-stack.html" data-umami-event="nav-my-stack">My Stack</a>
   </div>
 </nav>
 
-<div class="inner-page">
-  <a class="back-btn" href="index.html">← Back to home</a>
+<main id="main" class="inner-page">
+  <a class="back-btn" href="index.html" data-umami-event="stack-back-home">← Back to home</a>
   <h1>My Stack</h1>
   <p class="subtitle">Tools and gear I use daily.</p>
 
-  <div class="skill-group" style="margin-bottom:1.5rem">
-    <div class="skill-group-label">Editor & Terminal</div>
+  <div class="skill-group stack-group">
+    <div class="skill-group-label">Editor &amp; Terminal</div>
     <div class="tags">
       <span class="tag">Xcode</span><span class="tag">VS Code</span>
       <span class="tag">iTerm2</span><span class="tag">Oh My Zsh</span>
     </div>
   </div>
 
-  <div class="skill-group" style="margin-bottom:1.5rem">
+  <div class="skill-group stack-group">
     <div class="skill-group-label">Dev Tools</div>
     <div class="tags">
       <span class="tag">Fastlane</span><span class="tag">XcodeGen</span>
@@ -45,35 +77,47 @@
     </div>
   </div>
 
-  <div class="inline-details" style="margin-top: 2rem;">
-    <h3 style="font-size: 0.85rem; font-weight: 600; color: var(--muted); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">More Details</h3>
+  <!--
+    "More Details" disclosure section — commented out until real copy is written.
+
+    The whole block is parked here rather than just the lorem ipsum paragraphs: the three
+    trigger words only exist to reveal the panel text, so removing the placeholder copy on
+    its own would ship buttons that open empty popovers. Uncomment this once the three
+    panels below have real content. The widget logic in script.js needs no changes.
+
+  <div class="inline-details">
+    <h2 class="inline-details-heading">More Details</h2>
 
     <p class="inline-line">
       My stack is built for
-      <button type="button" class="inline-trigger" aria-expanded="false" aria-controls="stack-speed" data-target="stack-speed">speed</button>,
-      <button type="button" class="inline-trigger" aria-expanded="false" aria-controls="stack-clarity" data-target="stack-clarity">clarity</button>,
-      and <button type="button" class="inline-trigger" aria-expanded="false" aria-controls="stack-setup" data-target="stack-setup">repeatability</button>.
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <button type="button" class="inline-trigger" aria-expanded="false" aria-controls="stack-speed" data-target="stack-speed" data-umami-event="stack-detail-speed">speed</button>,
+      <button type="button" class="inline-trigger" aria-expanded="false" aria-controls="stack-clarity" data-target="stack-clarity" data-umami-event="stack-detail-clarity">clarity</button>,
+      and <button type="button" class="inline-trigger" aria-expanded="false" aria-controls="stack-setup" data-target="stack-setup" data-umami-event="stack-detail-repeatability">repeatability</button>.
     </p>
 
     <div id="stack-speed" class="inline-panel" aria-live="polite" aria-hidden="true">
       <button type="button" class="inline-panel-close" aria-label="Close detail">×</button>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p>TODO: why the stack is built for speed.</p>
     </div>
 
     <div id="stack-clarity" class="inline-panel" aria-live="polite" aria-hidden="true">
       <button type="button" class="inline-panel-close" aria-label="Close detail">×</button>
-      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>TODO: why the stack is built for clarity.</p>
     </div>
 
     <div id="stack-setup" class="inline-panel" aria-live="polite" aria-hidden="true">
       <button type="button" class="inline-panel-close" aria-label="Close detail">×</button>
-      <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+      <p>TODO: why the stack is built for repeatability.</p>
     </div>
   </div>
-</div>
+  -->
+</main>
+
+<footer>Osmin Vazquez · iOS Developer · Guadalajara, MX</footer>
 
 <script src="script.js"></script>
 
+<!-- Privacy-first analytics -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f2526937-3c88-48e1-8fc8-846e70ded4b5"></script>
 </body>
 </html>
