@@ -66,3 +66,7 @@ by design, not by configuration.
   Uncommenting it is all that's needed — `script.js` requires no changes.
 - **New pages need three things**: the icon `<link>` block, the metadata block, and an entry
   in `sitemap.xml`.
+- **`_headers` is Netlify-specific.** It exists only to serve `site.webmanifest` as
+  `application/manifest+json`; Netlify defaults the unknown `.webmanifest` extension to
+  `application/octet-stream`. If the site ever moves off Netlify, this needs re-doing in
+  whatever the new host uses.

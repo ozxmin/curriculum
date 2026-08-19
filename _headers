@@ -1,0 +1,5 @@
+# Netlify serves .webmanifest as application/octet-stream because it doesn't know
+# the extension. The spec requires application/manifest+json, and Chrome warns
+# about the mismatch when installing the site.
+/site.webmanifest
+  Content-Type: application/manifest+json
