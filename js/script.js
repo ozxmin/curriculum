@@ -9,6 +9,30 @@ function closeAllDisclosure() {
   });
 }
 
+// Panels are translated by -50% on X, so `left` is the panel's centre point.
+// Clamp that centre so a trigger near either edge can't push the panel out of
+// the container (and off-screen) on narrow viewports.
+function positionPanel(button, panel) {
+  const container = button.closest('.inline-details');
+  if (!container) return;
+
+  const buttonRect = button.getBoundingClientRect();
+  const containerRect = container.getBoundingClientRect();
+
+  const halfPanel = panel.offsetWidth / 2;
+  const centre = buttonRect.left - containerRect.left + (button.offsetWidth / 2);
+  const maxCentre = containerRect.width - halfPanel;
+
+  // When the panel is wider than its container there is no valid clamp range;
+  // fall back to centring it rather than letting min/max invert.
+  const clamped = maxCentre < halfPanel
+    ? containerRect.width / 2
+    : Math.min(Math.max(centre, halfPanel), maxCentre);
+
+  panel.style.left = `${clamped}px`;
+  panel.style.top = `${buttonRect.top - containerRect.top}px`;
+}
+
 function setDisclosureState(button, shouldOpen) {
   const panel = document.getElementById(button.dataset.target);
   if (!panel) return;
@@ -18,15 +42,7 @@ function setDisclosureState(button, shouldOpen) {
   panel.setAttribute('aria-hidden', String(!shouldOpen));
 
   if (shouldOpen) {
-    const container = button.closest('.inline-details');
-    const buttonRect = button.getBoundingClientRect();
-    const containerRect = container.getBoundingClientRect();
-
-    const left = buttonRect.left - containerRect.left + (button.offsetWidth / 2);
-    const top = buttonRect.top - containerRect.top;
-
-    panel.style.left = `${left}px`;
-    panel.style.top = `${top}px`;
+    positionPanel(button, panel);
   }
 }
 
@@ -80,11 +96,6 @@ window.addEventListener('resize', () => {
     const panel = document.getElementById(button.dataset.target);
     if (!panel) return;
 
-    const container = button.closest('.inline-details');
-    const buttonRect = button.getBoundingClientRect();
-    const containerRect = container.getBoundingClientRect();
-
-    panel.style.left = `${buttonRect.left - containerRect.left + (button.offsetWidth / 2)}px`;
-    panel.style.top = `${buttonRect.top - containerRect.top}px`;
+    positionPanel(button, panel);
   });
 });
