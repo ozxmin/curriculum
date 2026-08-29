@@ -5,12 +5,21 @@ Live at **https://career.ozmin.me** (deployed on Netlify, domain via Hover).
 
 ## Run locally
 
+Double-click **`serve.command`** in Finder, or from a terminal:
+
 ```sh
-python3 -m http.server 8000
+./serve.command          # or: python3 -m http.server 8000
 # → http://localhost:8000
 ```
 
-That's it. No dependencies, no bundler. Deploying is just publishing the repo root.
+Asset paths are root-absolute, so the site needs to be *served* — opening `index.html`
+straight from Finder resolves `/css/styles.css` to `file:///css/styles.css` and you get an
+unstyled page. `serve.command` exists so the local preview is still one double-click.
+
+Note that `404.html` is only wired up by Netlify; `python3 -m http.server` returns its own
+bare 404, so the not-found page can't be previewed locally.
+
+No dependencies, no bundler. Deploying is just publishing the repo root.
 
 ## Layout
 
@@ -36,7 +45,20 @@ Not leftover clutter — each of these breaks if moved:
 | `404.html` | Same — Netlify only picks it up at the publish root |
 | `site.webmanifest` | Site-level metadata rather than an asset, so it sits with `robots.txt` and `sitemap.xml` |
 
-All asset references are **root-absolute** (`/css/styles.css`, not `styles.css`). One caveat worth knowing: icon paths inside `site.webmanifest` resolve relative to *the manifest's* URL, not the page's — keeping them absolute avoids that trap entirely.
+All asset references are **root-absolute** (`/css/styles.css`, not `./styles.css`), on every
+page, with no exceptions. This is load-bearing rather than stylistic:
+
+- **Netlify serves each page at three URLs.** `my-stack.html` answers at `/my-stack.html`,
+  `/my-stack`, *and* `/my-stack/`. Relative paths resolve against the URL's directory, so on
+  that last one `./css/styles.css` becomes `/my-stack/css/styles.css` and 404s — a page that
+  still returns 200, just with no CSS and no JS. Absolute paths resolve identically at all
+  three. Every page you add would otherwise need its own redirect rule to paper over this.
+- **`404.html` is served at arbitrary unmatched URLs.** At `/foo/bar/baz` a relative path
+  would look for `/foo/bar/css/styles.css`. Absolute is the only thing that works here.
+- **Icon paths inside `site.webmanifest`** resolve relative to *the manifest's* URL, not the
+  page's. They are absolute too, which sidesteps that trap entirely.
+
+The cost is that you can't preview by double-clicking `index.html` — see *Run locally* above.
 
 ### Generated assets
 
