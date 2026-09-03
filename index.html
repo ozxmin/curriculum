@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <title>Osmin Vazquez · iOS Developer</title>
-<meta name="description" content="iOS developer with 8+ years shipping apps end-to-end — architecture, stakeholder alignment, and App Store delivery. Specialized in modernizing legacy codebases and keeping production stable." />
+<meta name="description" content="iOS developer with 8+ years moving codebases from one paradigm to the next — Objective-C to Swift, UIKit to SwiftUI, Intel to Apple Silicon — while the team keeps shipping. Architecture, CI/CD, and release ownership." />
 <meta name="author" content="Osmin Vazquez" />
 <link rel="canonical" href="https://career.ozmin.me/" />
 
@@ -13,7 +13,7 @@
 <meta property="og:type" content="profile" />
 <meta property="og:site_name" content="Osmin Vazquez" />
 <meta property="og:title" content="Osmin Vazquez · iOS Developer" />
-<meta property="og:description" content="8+ years building iOS apps end-to-end — architecture, stakeholder alignment, and shipping to the App Store." />
+<meta property="og:description" content="8+ years moving iOS codebases from one paradigm to the next — while the team keeps shipping." />
 <meta property="og:url" content="https://career.ozmin.me/" />
 <meta property="og:image" content="https://career.ozmin.me/img/og-image.png" />
 <meta property="og:image:width" content="1200" />
@@ -25,7 +25,7 @@
 <!-- Twitter/X -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Osmin Vazquez · iOS Developer" />
-<meta name="twitter:description" content="8+ years building iOS apps end-to-end — architecture, stakeholder alignment, and shipping to the App Store." />
+<meta name="twitter:description" content="8+ years moving iOS codebases from one paradigm to the next — while the team keeps shipping." />
 <meta name="twitter:image" content="https://career.ozmin.me/img/og-image.png" />
 
 <!-- Structured data (must be inline; ld+json ignores src) -->
@@ -53,12 +53,16 @@
     "knowsAbout": [
       "iOS Development",
       "Swift",
+      "Objective-C",
       "SwiftUI",
       "UIKit",
+      "Combine",
       "Clean Architecture",
       "MVVM",
       "VIPER",
-      "CI/CD"
+      "TDD",
+      "CI/CD",
+      "Context Engineering"
     ],
     "sameAs": [
       "https://github.com/ozxmin",
@@ -68,7 +72,7 @@
 }
 </script>
 
-<!-- Shared block: keep in sync with index.html, my-stack.html, 404.html.
+<!-- Shared block: keep in sync with index.html, how-i-work.html, projects.html, my-stack.html, 404.html.
      No build step by design, so this is duplicated on purpose. -->
 <!-- Icons -->
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -86,8 +90,13 @@
 
 <nav>
   <span class="nav-logo">
-    <a href="/">Career</a>
+    <a href="/">Osmin Vazquez</a>
   </span>
+  <div class="nav-links">
+    <a href="/how-i-work.html" data-umami-event="nav-how-i-work">How I Work</a>
+    <a href="/projects.html" data-umami-event="nav-projects">Projects</a>
+    <a href="/my-stack.html" data-umami-event="nav-my-stack">My Stack</a>
+  </div>
 </nav>
 
 <main id="main">
@@ -95,91 +104,287 @@
 <div class="hero">
   <p class="hero-label">iOS Developer</p>
   <h1>Osmin Vazquez</h1>
-  <p>8+ years building iOS apps end-to-end — architecture, stakeholder alignment, and shipping to the App Store. I specialize in modernizing legacy codebases and keeping production stable.</p>
+  <p>8+ years moving iOS codebases from one paradigm to the next — while the team keeps shipping. I own technical direction end to end: architecture, framework stack, CI/CD, API contracts, and release.</p>
+  <div class="avail">
+    <span class="chip"><strong>Guadalajara, MX</strong></span>
+    <span class="chip">Remote · US hours</span>
+    <span class="chip">FTE · EOR · Contractor</span>
+    <span class="chip">Open to relocation</span>
+  </div>
   <div class="hero-links">
     <a class="btn btn-primary" href="#contact" data-umami-event="cta-get-in-touch">Get in touch</a>
+    <a class="btn btn-outline" href="/how-i-work.html" data-umami-event="cta-how-i-work">How I work →</a>
   </div>
 </div>
 
-<!-- EXPERIENCE -->
+<!-- MIGRATIONS — the through-line. Layer 1 disclosure. -->
+<section aria-labelledby="migrations-heading">
+  <h2 id="migrations-heading">Five migrations, five employers</h2>
+  <p class="section-note">The through-line. Each row expands.</p>
+  <div class="ledger">
+
+    <details class="mig" id="mig-objc">
+      <summary data-umami-event="mig-objc-swift">
+        <span class="mig-move"><span class="from">Objective-C</span><span class="arrow">→</span>Swift</span>
+        <span class="mig-where">Numerator · 2021</span>
+        <span class="caret" aria-hidden="true">▶</span>
+      </summary>
+      <div class="mig-body">
+        <p>The hard part was concurrency, not syntax. Legacy Objective-C carried threading assumptions the compiler never enforced; behaviour that had quietly worked for years surfaced as race conditions the moment it crossed the bridge.</p>
+        <p>Diagnosed, fixed, and then covered — TDD and a linter introduced to a standing project so the class of bug could not return silently.</p>
+      </div>
+    </details>
+
+    <details class="mig" id="mig-viper">
+      <summary data-umami-event="mig-mvc-viper">
+        <span class="mig-move"><span class="from">MVC</span><span class="arrow">→</span>VIPER + RxSwift</span>
+        <span class="mig-where">BBVA · 2018</span>
+        <span class="caret" aria-hidden="true">▶</span>
+      </summary>
+      <div class="mig-body">
+        <p>The architecture came down from the global organization. My job was teaching it: three developers spanning junior, mid and senior — one of whom had built the <em>old</em> MVC app, and one of whom was a React Native developer new to iOS.</p>
+        <p>I got that engineer's first tickets accepted without knowing React Native myself. Shipped under strict code-coverage requirements.</p>
+      </div>
+    </details>
+
+    <details class="mig" id="mig-swiftui">
+      <summary data-umami-event="mig-uikit-swiftui">
+        <span class="mig-move"><span class="from">UIKit</span><span class="arrow">→</span>SwiftUI + Combine</span>
+        <span class="mig-where">Numerator · 2021</span>
+        <span class="caret" aria-hidden="true">▶</span>
+      </summary>
+      <div class="mig-body">
+        <p>Nobody had it on the roadmap. I made the case to the Tech Manager that it was even possible mid-migration, then to peers who were new enough to Swift that they had not considered SwiftUI an option — once introduced, they were enthusiastic.</p>
+        <p>Led roughly ten months of incremental adoption with two senior iOS engineers, setting guidelines and reviewing code. Incremental, never a rewrite.</p>
+      </div>
+    </details>
+
+    <details class="mig" id="mig-silicon">
+      <summary data-umami-event="mig-intel-silicon">
+        <span class="mig-move"><span class="from">Intel</span><span class="arrow">→</span>Apple Silicon</span>
+        <span class="mig-where">DiGinn · 2022</span>
+        <span class="caret" aria-hidden="true">▶</span>
+      </summary>
+      <div class="mig-body">
+        <p>Inherited a non-runnable, stale project. Made the business case for the migration to stakeholders before doing the work, rather than presenting it as a fait accompli.</p>
+        <p>Retired stale dependencies in favour of Swift-native features, cut project warnings by ~90%, and left behind a CI pipeline that shipped 20+ releases.</p>
+      </div>
+    </details>
+
+    <details class="mig" id="mig-agentic">
+      <summary data-umami-event="mig-agentic">
+        <span class="mig-move"><span class="from">Hand-written</span><span class="arrow">→</span>Agentic</span>
+        <span class="mig-where">CHOP · 2025</span>
+        <span class="caret" aria-hidden="true">▶</span>
+      </summary>
+      <div class="mig-body">
+        <p>Team productivity had halted under unchecked AI code generation: output drifted from conventions, and the review burden landed on senior engineers.</p>
+        <p>I encoded the architecture and review standards into a spec-driven workflow the agents read before writing code — moving architecture from something policed in review to something satisfied before the first line exists. <a href="/how-i-work.html" data-umami-event="mig-agentic-readmore">How that works →</a></p>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<!-- SELECTED WORK — layer 2 entry points -->
+<section aria-labelledby="selected-heading">
+  <h2 id="selected-heading">Selected work</h2>
+  <div class="cards">
+    <a class="card" href="#job-chop" data-umami-event="card-chop">
+      <span class="card-kicker">Children's Hospital of Philadelphia</span>
+      <span class="card-title">Real-time sensor pipeline</span>
+      <span class="card-desc">Bluetooth hardware polling, parallel SwiftUI graphing of live streams, Cosmos DB persistence through a RESTful API. Sole iOS developer on a cross-functional research team.</span>
+      <span class="card-more">Read the detail ↓</span>
+    </a>
+    <a class="card" href="#job-bomart" data-umami-event="card-bomart">
+      <span class="card-kicker">Bomart · independent</span>
+      <span class="card-title">Discovery to deployment, solo</span>
+      <span class="card-desc">Won the engagement myself: on-site discovery, technical proposal, scope and terms — then built it and deployed through Apple Business Manager.</span>
+      <span class="card-more">Read the detail ↓</span>
+    </a>
+    <a class="card" href="/projects.html" data-umami-event="card-arch-kit">
+      <span class="card-kicker">Open work</span>
+      <span class="card-title">ios-arch-kit</span>
+      <span class="card-desc">Architecture guardrails an agent reads before writing code, extracted from a production reference codebase with every rule cited to a real file.</span>
+      <span class="card-more">See projects →</span>
+    </a>
+  </div>
+</section>
+
+<!-- EXPERIENCE — headline and scope always visible; evidence on demand -->
 <section aria-labelledby="experience-heading">
   <h2 id="experience-heading">Experience</h2>
+  <p class="section-note">Headline and scope are always visible. Expand for the evidence.</p>
 
-  <div class="job">
+  <div class="job" id="job-chop">
     <div class="job-header">
-      <span class="job-title">iOS Principal · Children's Hospital of Philadelphia</span>
+      <span class="job-title">Principal iOS Developer · Children's Hospital of Philadelphia</span>
       <span class="job-meta">2025 — 2026</span>
     </div>
-    <ul>
-      <li>Shipped a medical research app with real-time data pipeline, hardware polling, Azure Cosmos DB persistence, and live peak detection on SwiftUI charts.</li>
-      <li>Architected a Clean Architecture + SOLID codebase, using agentic tools to sustain high delivery velocity.</li>
-    </ul>
+    <p class="job-scope">Sole owner of the iOS platform in a cross-functional medical research team.</p>
+    <details>
+      <summary data-umami-event="exp-chop"><span class="caret" aria-hidden="true">▶</span> What I owned</summary>
+      <ul>
+        <li>Shipped a medical research app implementing a real-time data pipeline: Bluetooth hardware polling, parallel SwiftUI graphing of live sensor streams, and Cosmos DB persistence through a RESTful API.</li>
+        <li>Owned architecture, delivery and release end to end — no one above me on iOS.</li>
+        <li>Feature scoping in PI planning, code review, merge approval, and TestFlight releases to QA.</li>
+        <li>Resolved a team-wide productivity halt caused by unchecked AI code generation by encoding architecture and review standards into a spec-driven agentic workflow.</li>
+      </ul>
+    </details>
   </div>
 
-  <div class="job">
+  <div class="job" id="job-bomart">
     <div class="job-header">
-      <span class="job-title">iOS Product Engineer · Bomart</span>
+      <span class="job-title">Lead iOS Developer · Bomart <span class="job-meta">(independent consultant)</span></span>
       <span class="job-meta">2024 — 2025</span>
     </div>
-    <ul>
-      <li>Managed full project lifecycle: proposal, contracts, and delivery.</li>
-      <li>Designed and launched a custom iOS 17+ app with auth, transaction notifications, and Apple Business Manager deployment.</li>
-    </ul>
+    <p class="job-scope">The only role where I owned the commercial relationship as well as the code.</p>
+    <details>
+      <summary data-umami-event="exp-bomart"><span class="caret" aria-hidden="true">▶</span> What I owned</summary>
+      <ul>
+        <li>Approached about a real business problem; ran on-site discovery and returned with a technical solution, scope, timeline, technology choices and commercial terms.</li>
+        <li>Designed and built a custom iOS 17+ app solo — authentication, transaction notification, local storage.</li>
+        <li>Established enterprise deployment and device management via Apple Business Manager rather than the App Store.</li>
+        <li>Ran weekly client reviews and coordinated with client IT to clear dependencies.</li>
+      </ul>
+    </details>
   </div>
 
-  <div class="job">
+  <div class="job" id="job-diginn">
     <div class="job-header">
-      <span class="job-title">Lead iOS Developer · DigInn</span>
+      <span class="job-title">Principal iOS Developer · DiGinn <span class="job-meta">(Tango.io)</span></span>
       <span class="job-meta">2022 — 2023</span>
     </div>
-    <ul>
-      <li>Reduced crashes to near-zero via CI/CD across 20+ releases.</li>
-      <li>Migrated legacy Intel project to Apple Silicon, unblocking team velocity.</li>
-      <li>Implemented analytics, A/B testing, and push notifications with Firebase.</li>
-    </ul>
+    <p class="job-scope">Sole iOS engineer setting technical direction, alongside one engineer per platform.</p>
+    <details>
+      <summary data-umami-event="exp-diginn"><span class="caret" aria-hidden="true">▶</span> What I owned</summary>
+      <ul>
+        <li>Inherited a non-runnable, stale project and made the case for the migration before doing the work.</li>
+        <li>Root-caused and eliminated recurring crashes in a codebase I had not written — crash rate to near zero.</li>
+        <li>Built the safety net: unit tests and CI aimed specifically at the crash class I had just fixed.</li>
+        <li>Shipped 20+ releases through the CI/CD pipeline I established; reduced project warnings by ~90%.</li>
+        <li>Implemented Firebase analytics, A/B testing and push notifications; cut build times via build schemes.</li>
+      </ul>
+    </details>
   </div>
 
-  <div class="job">
+  <div class="job" id="job-numerator">
     <div class="job-header">
-      <span class="job-title">Senior iOS Developer · Numerator</span>
+      <span class="job-title">Senior iOS Developer · Numerator <span class="job-meta">(Tango.io)</span></span>
       <span class="job-meta">2021 — 2022</span>
     </div>
-    <ul>
-      <li>Bridged Objective-C to Swift and led SwiftUI + Combine introduction.</li>
-      <li>Defined and enforced MVVM + Rx architecture. Reduced tech debt to bump deployment targets.</li>
-    </ul>
+    <p class="job-scope">Proposed the SwiftUI + Combine transition, won approval, then led it for ~10 months.</p>
+    <details>
+      <summary data-umami-event="exp-numerator"><span class="caret" aria-hidden="true">▶</span> What I owned</summary>
+      <ul>
+        <li>Set guidelines, proposed patterns and reviewed code for two senior iOS engineers.</li>
+        <li>Bridged legacy Objective-C functionality to Swift, resolving the latent race conditions the bridge surfaced.</li>
+        <li>Defined and enforced MVVM + Rx; introduced TDD, protocol-oriented design and linting to a standing project.</li>
+        <li>Unblocked the deployment-target bump to current (−2n) by paying down technical debt.</li>
+      </ul>
+    </details>
   </div>
 
-  <div class="job">
+  <div class="job" id="job-rccl">
     <div class="job-header">
-      <span class="job-title">iOS Developer II · Royal Caribbean</span>
+      <span class="job-title">iOS Developer · Royal Caribbean <span class="job-meta">(via Globant)</span></span>
       <span class="job-meta">2019 — 2021</span>
     </div>
-    <ul>
-      <li>Built user features with UIKit and VisionKit across multiple teams.</li>
-      <li>Contributed to backend migration while keeping reusable code across brands.</li>
-    </ul>
+    <p class="job-scope">Led 2–3 mid-level iOS developers through significant organizational change.</p>
+    <details>
+      <summary data-umami-event="exp-rccl"><span class="caret" aria-hidden="true">▶</span> What I owned</summary>
+      <ul>
+        <li>Built user features with UIKit and VisionKit.</li>
+        <li>Supported multiple teams; enforced coding standards and reusable design patterns.</li>
+        <li>Contributed to a backend migration while keeping the codebase reusable across cruise ships — one codebase, many vessels, each with its own configuration.</li>
+      </ul>
+    </details>
   </div>
 
-  <div class="job">
+  <div class="job" id="job-bbva">
     <div class="job-header">
-      <span class="job-title">iOS Developer + Tech-Lead MX · BBVA</span>
+      <span class="job-title">iOS Developer, Tech Lead for Mexico · BBVA</span>
       <span class="job-meta">2018 — 2019</span>
     </div>
-    <ul>
-      <li>Developed key features using VIPER, RxSwift, and strict code coverage.</li>
-      <li>Coordinated international teams and led interviews + onboarding.</li>
-    </ul>
+    <p class="job-scope">Promoted from junior developer to Tech Lead for Mexico within 10 months.</p>
+    <details>
+      <summary data-umami-event="exp-bbva"><span class="caret" aria-hidden="true">▶</span> What I owned</summary>
+      <ul>
+        <li>Led 3 developers (junior, mid, senior) rebuilding a legacy banking app in VIPER, RxSwift and TDD under strict code-coverage requirements.</li>
+        <li>Taught the team the architectural patterns adopted from the global organization.</li>
+        <li>Onboarded a React Native developer into the iOS stack and got their first tickets accepted.</li>
+        <li>Conducted interviews and project onboarding; aligned local compliance with global strategy across international teams.</li>
+      </ul>
+    </details>
   </div>
 
-  <div class="job">
+  <div class="job" id="job-connected">
     <div class="job-header">
-      <span class="job-title">Back-End + Infra · Connected B2B</span>
+      <span class="job-title">Backend Developer, Tech Infrastructure · Connected B2B</span>
       <span class="job-meta">2017 — 2018</span>
     </div>
-    <ul>
-      <li>Established AWS infrastructure and designed APIs with Node.js + MongoDB.</li>
-    </ul>
+    <p class="job-scope">Established the company's technical infrastructure from nothing.</p>
+    <details>
+      <summary data-umami-event="exp-connected"><span class="caret" aria-hidden="true">▶</span> What I owned</summary>
+      <ul>
+        <li>Built the AWS infrastructure; designed APIs and services in Node.js and MongoDB.</li>
+        <li>Enabled integration between the public website and internal systems.</li>
+      </ul>
+    </details>
+  </div>
+</section>
+
+<!-- SKILLS — tags that answer "where did you use this?" -->
+<section aria-labelledby="skills-heading">
+  <h2 id="skills-heading">Skills</h2>
+  <p class="section-note">Tags with a dot answer “where did you use this?”</p>
+
+  <div class="skill-group">
+    <div class="skill-group-label">Language &amp; frameworks</div>
+    <div class="tags">
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-swift" data-ev="Production since 2018, in every iOS role. Also the language of the two migrations I led.">Swift</button>
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-objc" data-ev="Numerator. Bridged legacy functionality to Swift — the race conditions, not the syntax, were the work.">Objective-C</button>
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-swiftui" data-ev="CHOP and Numerator. Led its introduction into a live UIKit codebase in 2021; live sensor graphing at CHOP in 2025.">SwiftUI</button>
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-uikit" data-ev="Royal Caribbean, BBVA, Numerator. Still the substrate under most production SwiftUI work.">UIKit</button>
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-combine" data-ev="Numerator. Led its introduction alongside SwiftUI in 2021.">Combine</button>
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-corebluetooth" data-ev="CHOP. Bluetooth hardware polling feeding live UI graphs.">Core Bluetooth</button>
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-async" data-ev="CHOP. Parallelised network calls across a collection on an iOS 18 / Xcode 26 project.">async/await</button>
+      <span class="tag">SwiftData</span><span class="tag">Core Data</span><span class="tag">VisionKit</span>
+      <span class="tag">MapKit</span><span class="tag">CoreLocation</span><span class="tag">Foundation</span>
+    </div>
+  </div>
+
+  <div class="skill-group">
+    <div class="skill-group-label">Architecture &amp; quality</div>
+    <div class="tags">
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-clean" data-ev="CHOP. Composition root as the place that absorbs churn; ports chosen to model domain capabilities, not mechanisms.">Clean Architecture</button>
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-viper" data-ev="BBVA. Legacy banking app rebuild, taught to a team of three.">VIPER</button>
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-mvvm" data-ev="Numerator. Defined and enforced as the project standard.">MVVM + Rx</button>
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-tdd" data-ev="Numerator (introduced to a standing project) and BBVA (strict coverage requirements).">TDD</button>
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-spm" data-ev="Module boundaries as compile-time enforcement — a wrong import fails the build rather than failing review.">Swift Packages</button>
+      <span class="tag">SOLID</span><span class="tag">Structured Concurrency</span><span class="tag">XCTest</span>
+      <span class="tag">Swift Testing</span><span class="tag">Instruments</span><span class="tag">LLDB</span>
+    </div>
+  </div>
+
+  <div class="skill-group">
+    <div class="skill-group-label">Delivery</div>
+    <div class="tags">
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-cicd" data-ev="DiGinn. Built from scratch; 20+ releases shipped through it.">CI/CD</button>
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-abm" data-ev="Bomart. Enterprise MDM distribution — not the App Store.">Apple Business Manager</button>
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-asc" data-ev="Certificates, provisioning profiles, multi-team membership, shared automatic signing across accounts.">App Store Connect</button>
+      <span class="tag">Xcode</span><span class="tag">Git</span><span class="tag">Fastlane</span>
+      <span class="tag">TestFlight</span><span class="tag">Firebase</span>
+    </div>
+  </div>
+
+  <div class="skill-group">
+    <div class="skill-group-label">AI-assisted engineering</div>
+    <div class="tags">
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-context-eng" data-ev="CHOP and ios-arch-kit. Encoding architectural standards as machine-readable constraints an agent reads before writing code.">Context engineering</button>
+      <button class="tag" type="button" aria-expanded="false" data-umami-event="skill-evals" data-ev="Blind guided/unguided comparison, prediction scorecards, and calibration rules derived from measured hit rates.">Evals</button>
+      <span class="tag">Agentic workflows</span><span class="tag">Guardrails</span><span class="tag">Spec-driven development</span>
+    </div>
   </div>
 </section>
 
@@ -188,39 +393,10 @@
   <h2 id="education-heading">Education</h2>
   <div class="edu">
     <div>
-      <div class="edu-name">B.S. Computer Science · Metropolitan Autonomous University</div>
-      <div class="edu-meta">Cum Laude</div>
+      <div class="edu-name">Computer Science · Metropolitan Autonomous University</div>
+      <div class="edu-meta">Cum Laude · coursework complete (pasante); título pending Servicio Social</div>
     </div>
     <span class="edu-meta">2013 — 2018</span>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section aria-labelledby="skills-heading">
-  <h2 id="skills-heading">Skills</h2>
-  <div class="skill-group">
-    <div class="skill-group-label">Frameworks &amp; APIs</div>
-    <div class="tags">
-      <span class="tag">SwiftUI</span><span class="tag">UIKit</span><span class="tag">Combine</span>
-      <span class="tag">SwiftData</span><span class="tag">XCTest</span><span class="tag">Swift Testing</span>
-      <span class="tag">VisionKit</span><span class="tag">MapKit</span><span class="tag">CoreLocation</span>
-      <span class="tag">GCD</span><span class="tag">Foundation</span><span class="tag">Observation</span>
-    </div>
-  </div>
-  <div class="skill-group">
-    <div class="skill-group-label">Architecture &amp; Patterns</div>
-    <div class="tags">
-      <span class="tag">MVVM</span><span class="tag">VIPER</span><span class="tag">Clean Architecture</span>
-      <span class="tag">SOLID</span><span class="tag">TDD</span><span class="tag">Structured Concurrency</span>
-      <span class="tag">Rx</span><span class="tag">MVC</span><span class="tag">MVP</span>
-    </div>
-  </div>
-  <div class="skill-group">
-    <div class="skill-group-label">Tooling</div>
-    <div class="tags">
-      <span class="tag">CI/CD</span><span class="tag">Fastlane</span><span class="tag">XcodeGen</span>
-      <span class="tag">Instruments</span><span class="tag">LLDB</span><span class="tag">Firebase</span>
-    </div>
   </div>
 </section>
 
@@ -233,12 +409,17 @@
     <div class="contact-item"><span>Github</span><a href="https://github.com/ozxmin" rel="noopener noreferrer" data-umami-event="contact-github">github.com/ozxmin</a></div>
     <div class="contact-item"><span>LinkedIn</span><a href="https://linkedin.com/in/ozxmin" rel="noopener noreferrer" data-umami-event="contact-linkedin">linkedin.com/in/ozxmin</a></div>
   </div>
+  <details class="engage">
+    <summary data-umami-event="contact-engagement"><span class="caret" aria-hidden="true">▶</span> Engagement &amp; availability</summary>
+    <p>Available full-time (direct or through an EOR), part-time, or as an independent contractor. Active RFC with prior invoicing under RESICO, so a B2B contract with a US or Canadian client needs no new entity. Spanish native, English professional. Open to remote on US hours and to relocation.</p>
+  </details>
 </section>
 
 </main>
 
 <footer>Osmin Vazquez · iOS Developer · Guadalajara, MX</footer>
 
+<script src="/js/script.js"></script>
 
 <!-- Privacy-first analytics -->
 <script defer src="https://cloud.umami.is/script.js" data-website-id="f2526937-3c88-48e1-8fc8-846e70ded4b5"></script>

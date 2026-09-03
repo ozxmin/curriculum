@@ -67,6 +67,11 @@ nav {
 
 .nav-links a:hover { color: var(--accent); }
 
+.nav-links a[aria-current="page"] {
+  color: var(--text);
+  border-bottom: 1px solid var(--accent);
+}
+
 /* HERO */
 .hero {
   max-width: 720px; margin: 0 auto;
@@ -399,6 +404,191 @@ footer {
   letter-spacing: .05em;
 }
 
+/* ===========================================================
+   PROGRESSIVE DISCLOSURE
+   Three layers, in increasing depth:
+     L0  static markup            — the 20-second scan
+     L1  <details>/<summary>      — evidence, inline, no navigation
+     L2  a separate page          — full case study
+     L-inf  .tag[data-ev] popover — one line of context on a term
+   Rule: disclosure adds evidence, it never *carries* a claim.
+   Anything load-bearing must survive with every panel closed.
+   =========================================================== */
+
+/* Availability chips under the hero */
+.avail {
+  display: flex; flex-wrap: wrap; gap: .4rem;
+  margin: -1rem 0 1.75rem;
+}
+
+.chip {
+  font-size: .75rem; color: var(--muted);
+  border: 1px solid var(--border); border-radius: 999px;
+  padding: .2rem .65rem; white-space: nowrap;
+}
+
+.chip strong { color: var(--text); font-weight: 600; }
+
+.section-note {
+  font-size: .8rem; color: var(--muted);
+  margin: -1.1rem 0 1.25rem;
+}
+
+/* Shared disclosure affordance. The caret is decorative; the state is
+   carried by the native `open` attribute, so screen readers get it free. */
+details > summary { cursor: pointer; list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+details > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.caret {
+  display: inline-block; color: var(--accent);
+  font-size: .62rem; transition: transform .2s ease; flex: none;
+}
+
+details[open] > summary .caret { transform: rotate(90deg); }
+
+/* L1 — migration ledger */
+.ledger { border-top: 1px solid var(--border); }
+
+.mig { border-bottom: 1px solid var(--border); }
+
+.mig > summary {
+  display: grid; grid-template-columns: 1fr auto auto;
+  align-items: baseline; gap: .75rem;
+  padding: .8rem .5rem .8rem .25rem;
+  transition: background-color .15s;
+}
+
+.mig > summary:hover { background: var(--tag-bg); }
+
+.mig-move { font-size: .95rem; font-weight: 600; letter-spacing: -.2px; }
+.mig-move .arrow { color: var(--accent); font-weight: 400; padding: 0 .3rem; }
+.mig-move .from { color: var(--muted); font-weight: 500; }
+
+.mig-where { font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.mig-body {
+  padding: 0 .5rem 1rem 1.1rem; margin: -.15rem 0 0 .25rem;
+  border-left: 2px solid var(--border);
+}
+
+.mig-body p { font-size: .9rem; color: var(--muted); max-width: 40rem; }
+.mig-body p + p { margin-top: .6rem; }
+
+/* L2 entry points */
+.cards { display: grid; gap: .75rem; }
+
+.card {
+  display: block; text-decoration: none; color: inherit;
+  border: 1px solid var(--border); border-radius: 12px;
+  padding: 1rem 1.1rem;
+  transition: border-color .2s, background-color .2s;
+}
+
+.card:hover { border-color: var(--accent); background: var(--bg2); }
+
+.card-kicker {
+  display: block; font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: .35rem;
+}
+
+.card-title { display: block; font-weight: 700; font-size: .98rem; margin-bottom: .3rem; }
+.card-desc { display: block; font-size: .875rem; color: var(--muted); }
+.card-more { display: inline-block; font-size: .8rem; color: var(--accent); margin-top: .5rem; }
+
+/* Experience: scope is always visible, evidence is disclosed */
+.job-scope { font-size: .9rem; color: var(--muted); margin: .3rem 0 .55rem; max-width: 40rem; }
+
+.job details > summary {
+  display: inline-flex; align-items: center; gap: .45rem;
+  font-size: .8rem; font-weight: 600; color: var(--accent);
+  padding: .2rem 0;
+}
+
+.job details > summary:hover { text-decoration: underline; }
+
+/* Deep-linked disclosure: /#job-chop opens and highlights that role. */
+.job:target { animation: job-flash 1.6s ease; }
+
+@keyframes job-flash {
+  0%, 40% { background: var(--bg2); }
+  100% { background: transparent; }
+}
+
+/* L-inf — evidence popover on skill tags */
+button.tag {
+  cursor: pointer; font-family: inherit;
+  border: 1px solid transparent;
+}
+
+button.tag::after { content: ' \00B7'; opacity: .55; }
+
+button.tag:hover,
+button.tag[aria-expanded="true"] { border-color: var(--accent); }
+
+#evidence {
+  position: fixed; z-index: 80; width: min(20rem, 78vw);
+  padding: .75rem .85rem; border-radius: 12px;
+  background: var(--bg); border: 1px solid var(--border);
+  box-shadow: 0 12px 22px rgba(15, 23, 42, .10), 0 4px 10px rgba(15, 23, 42, .05);
+  opacity: 0; pointer-events: none; transform: translateY(4px);
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+#evidence.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+#evidence .ev-term { font-size: .75rem; font-weight: 700; margin-bottom: .25rem; }
+#evidence .ev-body { font-size: .85rem; color: var(--muted); line-height: 1.55; }
+
+/* Contact: engagement terms behind a disclosure */
+.engage { margin-top: 1.25rem; }
+
+.engage > summary {
+  display: inline-flex; align-items: center; gap: .45rem;
+  font-size: .8rem; font-weight: 600; color: var(--accent);
+}
+
+.engage p { font-size: .875rem; color: var(--muted); margin-top: .6rem; max-width: 40rem; }
+
+/* ===========================================================
+   L2 PAGES — how-i-work.html, projects.html
+   =========================================================== */
+.prose { max-width: 40rem; }
+.prose p { color: var(--muted); font-size: .95rem; }
+.prose p + p { margin-top: .75rem; }
+
+.prose h2 {
+  font-size: .95rem; font-weight: 700; color: var(--text);
+  margin: 1.75rem 0 .5rem;
+  text-transform: none; letter-spacing: normal;
+}
+
+.prose ol, .prose ul { margin: .6rem 0 .6rem 1.1rem; }
+.prose li { color: var(--muted); font-size: .92rem; padding: .18rem 0; }
+.prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .85em; background: var(--bg2);
+  padding: .1rem .3rem; border-radius: 4px;
+}
+
+.pull {
+  border-left: 2px solid var(--accent);
+  padding: .35rem 0 .35rem 1rem; margin: 1.25rem 0;
+  font-size: .95rem; color: var(--text); max-width: 38rem;
+}
+
+.metric-row { display: flex; flex-wrap: wrap; gap: 1.75rem; margin: 1.25rem 0 .5rem; }
+.metric-val { font-size: 1.65rem; font-weight: 800; letter-spacing: -.5px; font-variant-numeric: tabular-nums; }
+.metric-lbl { font-size: .75rem; color: var(--muted); margin-top: .1rem; }
+
+.proj { border-top: 1px solid var(--border); padding: 1.5rem 0; }
+.proj-title { font-size: 1rem; font-weight: 700; text-transform: none; letter-spacing: normal; margin: 0; }
+.proj-sub { font-size: .8rem; color: var(--muted); margin: .15rem 0 .75rem; }
+
+@media (max-width: 560px) {
+  .mig > summary { grid-template-columns: 1fr auto; }
+  .mig-where { grid-column: 1 / -1; margin-top: -.4rem; }
+}
+
 /* MOTION */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -502,6 +692,21 @@ footer {
 
   a[href^="mailto:"]::after,
   a[href^="tel:"]::after { content: ""; }
+
+  /* Disclosure must never amputate the printed CV. js/script.js opens every
+     <details> on beforeprint; these rules make the expanded state print well. */
+  .caret,
+  .card-more,
+  #evidence { display: none !important; }
+
+  .mig > summary { padding: .3rem 0; }
+  .mig-body { border-left: none; padding: 0 0 .5rem; margin-left: 0; }
+  .mig, .card, .metric-row, .proj { break-inside: avoid; page-break-inside: avoid; }
+
+  .chip { border-color: #999; }
+  .card { border-color: #ccc; }
+  .job details > summary { color: #000; }
+  .prose code { background: #fff; border: 1px solid #ccc; }
 
   a { color: #000; text-decoration: none; }
 }
