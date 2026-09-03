@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Projects · Osmin Vazquez</title>
+<meta name="description" content="Work built outside employment and shipped: ios-arch-kit architecture guardrails for agentic coding, an LLM orchestration pipeline, and smaller macOS tooling." />
+<meta name="author" content="Osmin Vazquez" />
+<link rel="canonical" href="https://career.ozmin.me/projects.html" />
+
+<!-- Open Graph / LinkedIn -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Osmin Vazquez" />
+<meta property="og:title" content="Projects · Osmin Vazquez" />
+<meta property="og:description" content="Built outside employment, and shipped: architecture guardrails for agentic coding, an LLM orchestration pipeline, and macOS tooling." />
+<meta property="og:url" content="https://career.ozmin.me/projects.html" />
+<meta property="og:image" content="https://career.ozmin.me/img/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Osmin Vazquez — iOS Developer — career.ozmin.me" />
+
+<!-- Twitter/X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Projects · Osmin Vazquez" />
+<meta name="twitter:description" content="Built outside employment, and shipped: architecture guardrails for agentic coding, an LLM orchestration pipeline, and macOS tooling." />
+<meta name="twitter:image" content="https://career.ozmin.me/img/og-image.png" />
+
+<!-- Shared block: keep in sync with index.html, how-i-work.html, projects.html, my-stack.html, 404.html.
+     No build step by design, so this is duplicated on purpose. -->
+<!-- Icons -->
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#09090b" />
+
+<link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav>
+  <span class="nav-logo">
+    <a href="/">Osmin Vazquez</a>
+  </span>
+  <div class="nav-links">
+    <a href="/how-i-work.html" data-umami-event="nav-how-i-work">How I Work</a>
+    <a href="/projects.html" aria-current="page" data-umami-event="nav-projects">Projects</a>
+    <a href="/my-stack.html" data-umami-event="nav-my-stack">My Stack</a>
+  </div>
+</nav>
+
+<main id="main" class="inner-page">
+  <a class="back-btn" href="/" data-umami-event="projects-back-home">← Back to résumé</a>
+  <h1>Projects</h1>
+  <p class="subtitle">Built outside employment, and shipped.</p>
+
+  <article class="proj">
+    <h2 class="proj-title">ios-arch-kit</h2>
+    <p class="proj-sub">Architecture guardrails for agentic coding</p>
+    <div class="prose">
+      <p>A portable kit that encodes iOS architectural conventions as machine-readable constraints an agent reads before writing code. Conventions were extracted from a production reference codebase across six structured passes under a hard evidentiary rule: every claim cites a real file path, nothing generalised from a single occurrence, no invented principles. Claims are tagged evidenced or extrapolated, and the ratio is tracked as a quality metric.</p>
+      <p>Ships as an always-on specification under 60 lines, an architecture skill with a reference directory, an installer, and documentation of the extraction passes.</p>
+      <p><strong>A defended position.</strong> Storage ports are synchronous <code>throws</code>; network ports are <code>async throws</code>. A store protocol never says <code>async</code>, never says <code>@MainActor</code>, and never names a queue — asynchrony is injected above it, and the composition root absorbs the churn. Verified against the repository's real concurrency migration: the seam modelling a domain capability survived; the seam modelling a concurrency mechanism was deleted by the new mechanism.</p>
+      <p><a href="/how-i-work.html" data-umami-event="projects-to-work">How the enforcement layers and the blind evaluation work →</a></p>
+    </div>
+  </article>
+
+  <article class="proj">
+    <h2 class="proj-title">Agentic rental search</h2>
+    <p class="proj-sub">LLM orchestration pipeline</p>
+    <div class="prose">
+      <p>An orchestrator/worker agent architecture with git worktrees parallelising worker sessions, running a cascade pipeline on a SQLite backbone: ingest, normalize, filter, extract, enrich, score, vision, review.</p>
+      <p>Cost-aware model routing sends volume work to local and free-tier models and reserves premium models for pipeline construction and final review, with an eval harness and explicit token budgets. Automated vision review of listing photos against criteria replaced the manual screening step entirely.</p>
+    </div>
+  </article>
+
+  <article class="proj">
+    <h2 class="proj-title">Smaller, shipped</h2>
+    <p class="proj-sub">Tools I actually use</p>
+    <div class="prose">
+      <ul>
+        <li>Recursive macOS batch converter for RAW photography (ORF, NEF, DNG → JPEG) with binary-search quality targeting and mirrored output trees.</li>
+        <li>Hardware-accelerated video transcoding pipeline on Apple Silicon using ffmpeg and VideoToolbox.</li>
+        <li>This site: a static build on Netlify with the subdomain via Hover DNS — including diagnosing a wildcard A record that was overriding the CNAME, with <code>dig</code>.</li>
+      </ul>
+    </div>
+  </article>
+</main>
+
+<footer>Osmin Vazquez · iOS Developer · Guadalajara, MX</footer>
+
+<script src="/js/script.js"></script>
+
+<!-- Privacy-first analytics -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f2526937-3c88-48e1-8fc8-846e70ded4b5"></script>
+</body>
+</html>

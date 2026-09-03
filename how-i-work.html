@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>How I Work With Agents · Osmin Vazquez</title>
+<meta name="description" content="Encoding architectural standards as machine-readable guardrails an agent reads before writing code — the problem, the three enforcement layers, and the blind evaluation that measured them." />
+<meta name="author" content="Osmin Vazquez" />
+<link rel="canonical" href="https://career.ozmin.me/how-i-work.html" />
+
+<!-- Open Graph / LinkedIn -->
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Osmin Vazquez" />
+<meta property="og:title" content="How I Work With Agents · Osmin Vazquez" />
+<meta property="og:description" content="Agentic coding gives a team speed. Left unconstrained, it also gives them a review problem. This is what I did about it." />
+<meta property="og:url" content="https://career.ozmin.me/how-i-work.html" />
+<meta property="og:image" content="https://career.ozmin.me/img/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Osmin Vazquez — iOS Developer — career.ozmin.me" />
+
+<!-- Twitter/X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="How I Work With Agents · Osmin Vazquez" />
+<meta name="twitter:description" content="Agentic coding gives a team speed. Left unconstrained, it also gives them a review problem. This is what I did about it." />
+<meta name="twitter:image" content="https://career.ozmin.me/img/og-image.png" />
+
+<!-- Shared block: keep in sync with index.html, how-i-work.html, projects.html, my-stack.html, 404.html.
+     No build step by design, so this is duplicated on purpose. -->
+<!-- Icons -->
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#09090b" />
+
+<link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav>
+  <span class="nav-logo">
+    <a href="/">Osmin Vazquez</a>
+  </span>
+  <div class="nav-links">
+    <a href="/how-i-work.html" aria-current="page" data-umami-event="nav-how-i-work">How I Work</a>
+    <a href="/projects.html" data-umami-event="nav-projects">Projects</a>
+    <a href="/my-stack.html" data-umami-event="nav-my-stack">My Stack</a>
+  </div>
+</nav>
+
+<main id="main" class="inner-page">
+  <a class="back-btn" href="/" data-umami-event="work-back-home">← Back to résumé</a>
+  <h1>How I work with agents</h1>
+  <p class="subtitle">Agentic coding gives a team speed. Left unconstrained, it also gives them a review problem. This is what I did about it.</p>
+
+  <div class="prose">
+    <h2>The problem, as it actually showed up</h2>
+    <p>At the Children's Hospital of Philadelphia, team productivity halted. Not because the agents were slow — because their output drifted from our conventions, and every correction landed on whoever reviewed it. Throughput went up and delivery went down. That is the failure mode nobody warns you about.</p>
+
+    <h2>The fix</h2>
+    <p>I encoded the architecture and review standards into a spec-driven workflow — a <code>CLAUDE.md</code> at the repository root that agents read before writing any code. Standards stopped being something policed after the fact and became a precondition.</p>
+    <blockquote class="pull">It moves architecture from something we police in review to something enforced before the first line gets written.</blockquote>
+    <p>Adoption was passive by design: the specification was consistently followed by the agents. That is a deliberately narrower claim than “I rolled it out to the team”, and it is the claim that survives a reference check.</p>
+
+    <h2>Three enforcement layers</h2>
+    <ol>
+      <li><strong>Stated constraints.</strong> Architectural rules at the repository root, written as constraints rather than advice.</li>
+      <li><strong>Mechanical enforcement.</strong> Module boundaries as separate Swift Packages, so a wrong import <em>will not compile</em>; custom lint rules as CI errors rather than warnings; a build step that fails on misplaced files.</li>
+      <li><strong>A reference vertical slice.</strong> One hand-built path through the app, so the agent imitates a real pattern instead of inventing one.</li>
+    </ol>
+    <p>The order matters. Layer one is advisory and agents drift from it. Layer two is the one a team can actually trust, because they do not have to trust the agent — they trust the build.</p>
+
+    <h2>How I know it works</h2>
+    <p>I built the portable version of this as <a href="/projects.html" data-umami-event="work-to-projects">ios-arch-kit</a> and evaluated it blind, guided against unguided.</p>
+    <div class="metric-row">
+      <div class="metric"><div class="metric-val">~90%</div><div class="metric-lbl">conformance, guided</div></div>
+      <div class="metric"><div class="metric-val">~25%</div><div class="metric-lbl">conformance, unguided</div></div>
+      <div class="metric"><div class="metric-val">13 / 7 / 5</div><div class="metric-lbl">predictions confirmed / refuted / partial</div></div>
+    </div>
+    <p>The scorecard matters as much as the headline number. I ran the kit's architectural predictions against a real async/await migration in the reference repository, then turned the hit rate into a calibration rule applied to the remaining claims. Predicting where you will be wrong, and pricing it, is the part that generalises.</p>
+
+    <h2>When it goes wrong</h2>
+    <p>During the extraction I caught a fabricated statistic that had already propagated through three hops of generated files. I logged it as evidence for mandatory human review gates. I also caught my own error: I had briefed the agents with the wrong baseline commit, twice. Two agents flagged it, and the real baseline was established by CI-workflow blob match plus file modification times.</p>
+    <p>Both incidents are in the record on purpose. “How do you handle AI reliability?” deserves a real answer with a root cause and a process change, not a reassurance.</p>
+
+    <h2>What I would ask you</h2>
+    <ul>
+      <li>What does your agentic workflow look like in production today?</li>
+      <li>How do you measure agent output quality?</li>
+      <li>Who owns architecture when agents write most of the code?</li>
+    </ul>
+  </div>
+</main>
+
+<footer>Osmin Vazquez · iOS Developer · Guadalajara, MX</footer>
+
+<script src="/js/script.js"></script>
+
+<!-- Privacy-first analytics -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f2526937-3c88-48e1-8fc8-846e70ded4b5"></script>
+</body>
+</html>
