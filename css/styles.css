@@ -589,6 +589,97 @@ button.tag[aria-expanded="true"] { border-color: var(--accent); }
   .mig-where { grid-column: 1 / -1; margin-top: -.4rem; }
 }
 
+/* PIPELINE DIAGRAM — projects.html.
+   The figure sits inside the prose column, so the 1080px artwork renders at
+   roughly 640px and its 11px labels are not readable. That is on purpose: the
+   figure is a thumbnail, and clicking it opens the same SVG at full size in a
+   <dialog>. Light and dark are two files swapped by <picture>; the dark source
+   is scoped to `screen` so printing falls back to the light one. */
+.diagram { margin: 1.75rem 0 1.25rem; }
+
+/* The script strips the href and sets role="button", so the cursor and focus
+   affordances have to be stated here rather than inherited from :link. */
+.diagram-zoom { display: block; cursor: zoom-in; border-radius: 12px; }
+
+.diagram-zoom img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color .2s;
+}
+
+.diagram-zoom:hover img,
+.diagram-zoom:focus-visible img { border-color: var(--accent); }
+
+.diagram-zoom:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.diagram figcaption {
+  font-size: .75rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-top: .6rem;
+}
+
+.diagram-hint { color: var(--accent); }
+
+/* Full-size overlay. <dialog> earns its place here: focus trapping, Escape to
+   close and top-layer stacking all come free. The artwork is pinned to its
+   1080px design width so it stays legible and pans on a small screen, rather
+   than being shrunk back down to the size the thumbnail already is. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(96vw, 1140px);
+  max-width: none;
+  /* height must be definite for the auto margins to centre it: with height
+     auto and inset 0, the box stretches to fill and the margins resolve to
+     zero, so max-height then clamps it against the top-left corner. */
+  height: fit-content;
+  max-height: 92vh;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+.lightbox::backdrop { background: rgba(0, 0, 0, .72); }
+
+/* Fallback for browsers without <dialog>: position the panel and fake the
+   backdrop with a spread shadow, so the overlay still covers the page. */
+.lightbox.is-fallback {
+  display: block;
+  z-index: 999;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .72);
+}
+
+.lightbox-scroll {
+  overflow: auto;
+  max-height: 92vh;
+  overscroll-behavior: contain;
+}
+
+.lightbox-scroll img { display: block; width: 1080px; max-width: none; height: auto; }
+
+.lightbox-close {
+  position: absolute;
+  top: .6rem; right: .6rem;
+  width: 2rem; height: 2rem;
+  display: flex; align-items: center; justify-content: center;
+  font: inherit; font-size: 1.15rem; line-height: 1;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.lightbox-close:hover { border-color: var(--accent); color: var(--accent); }
+
 /* MOTION */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -702,6 +793,10 @@ button.tag[aria-expanded="true"] { border-color: var(--accent); }
   .mig > summary { padding: .3rem 0; }
   .mig-body { border-left: none; padding: 0 0 .5rem; margin-left: 0; }
   .mig, .card, .metric-row, .proj { break-inside: avoid; page-break-inside: avoid; }
+
+  .diagram { break-inside: avoid; page-break-inside: avoid; }
+  .diagram-zoom img { border-color: #ccc; }
+  .diagram-hint { display: none; }
 
   .chip { border-color: #999; }
   .card { border-color: #ccc; }

@@ -231,3 +231,153 @@ window.addEventListener('resize', () => {
     reopened = [];
   });
 })();
+
+/* ============================================================
+   Diagram lightbox
+   The pipeline figure renders at prose width, too small to read its
+   11px labels, so clicking it opens the same <picture> at its 1080px
+   design size over the page.
+
+   A click must never navigate. Cancelling the event is not enough on
+   its own — Safari was observed opening the overlay and then following
+   the link anyway — so once this script runs the href is moved to a
+   data attribute and the anchor becomes a button. With no href there
+   is nothing left to navigate to, whatever the browser does with the
+   event. The markup keeps a real href so the diagram is still
+   reachable with JavaScript off; new-tab clicks are reimplemented
+   explicitly below. <dialog> is used where available for its focus
+   trap and top-layer stacking, with a positioned fallback.
+   ============================================================ */
+(function () {
+  var link = document.querySelector('.diagram-zoom');
+  if (!link) return;
+
+  var thumb = link.querySelector('img');
+  var scheme = window.matchMedia('(prefers-color-scheme: dark)');
+  var dialog = null;
+  var closeBtn = null;
+
+  // Keep the full-size target in a data attribute. A lazy image may finish
+  // loading either side of this script running, and currentSrc is empty until
+  // it does, so re-resolve it whenever it changes.
+  var fullSrc = link.getAttribute('href');
+
+  function syncSrc() {
+    if (thumb.currentSrc) fullSrc = thumb.currentSrc;
+    link.setAttribute('data-full', fullSrc);
+  }
+
+  syncSrc();
+  thumb.addEventListener('load', syncSrc);
+  link.addEventListener('pointerdown', syncSrc);
+  if (scheme.addEventListener) scheme.addEventListener('change', syncSrc);
+
+  // Neutralise the anchor. This is the whole point: no href, no navigation.
+  link.removeAttribute('href');
+  link.setAttribute('role', 'button');
+  link.setAttribute('tabindex', '0');
+
+  function onKey(event) {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeOverlay();
+    }
+  }
+
+  function build() {
+    dialog = document.createElement('dialog');
+    dialog.className = 'lightbox';
+    dialog.setAttribute('role', 'dialog');
+    dialog.setAttribute('aria-modal', 'true');
+    dialog.setAttribute('aria-label', 'ios-arch-kit pipeline diagram, full size');
+
+    var scroll = document.createElement('div');
+    scroll.className = 'lightbox-scroll';
+
+    // Clone the thumbnail's <picture> rather than repeating the markup, so
+    // the light/dark <source> lives in exactly one place.
+    var art = link.querySelector('picture').cloneNode(true);
+    art.querySelector('img').removeAttribute('loading');
+    scroll.appendChild(art);
+
+    closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.className = 'lightbox-close';
+    closeBtn.setAttribute('aria-label', 'Close the diagram');
+    closeBtn.textContent = '×';
+    closeBtn.addEventListener('click', closeOverlay);
+
+    dialog.appendChild(scroll);
+    dialog.appendChild(closeBtn);
+
+    // The dialog box is only visible as the area around the scroll pane, so a
+    // click landing on it — rather than on the artwork — is a backdrop click.
+    dialog.addEventListener('click', function (event) {
+      if (event.target === dialog) closeOverlay();
+    });
+
+    // Escape is handled here as well as by the UA, so the fallback path and
+    // the native one behave identically.
+    dialog.addEventListener('keydown', onKey);
+
+    document.body.appendChild(dialog);
+  }
+
+  function openOverlay() {
+    if (!dialog) build();
+
+    if (typeof dialog.showModal === 'function') {
+      dialog.showModal();
+    } else {
+      // No <dialog> support: position it ourselves rather than let the click
+      // fall through to a navigation.
+      dialog.classList.add('is-fallback');
+      dialog.setAttribute('open', '');
+      document.addEventListener('keydown', onKey);
+    }
+
+    if (closeBtn) closeBtn.focus();
+  }
+
+  function closeOverlay() {
+    if (!dialog) return;
+
+    if (typeof dialog.close === 'function' && dialog.open && !dialog.classList.contains('is-fallback')) {
+      dialog.close();
+    } else {
+      dialog.removeAttribute('open');
+    }
+
+    dialog.classList.remove('is-fallback');
+    document.removeEventListener('keydown', onKey);
+    link.focus();
+  }
+
+  link.addEventListener('click', function (event) {
+    event.preventDefault();
+
+    // The anchor no longer has an href, so "open in new tab" has to be
+    // reimplemented rather than left to the browser.
+    if (event.metaKey || event.ctrlKey || event.shiftKey) {
+      window.open(fullSrc, '_blank', 'noopener');
+      return;
+    }
+
+    openOverlay();
+  });
+
+  // role="button" means the keyboard contract is ours to honour too.
+  link.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar') {
+      event.preventDefault();
+      openOverlay();
+    }
+  });
+
+  // Middle-click: no href, so open the new tab explicitly.
+  link.addEventListener('auxclick', function (event) {
+    if (event.button !== 1) return;
+    event.preventDefault();
+    window.open(fullSrc, '_blank', 'noopener');
+  });
+})();
