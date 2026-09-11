@@ -423,6 +423,22 @@ button.tag[aria-expanded="true"] { border-color: var(--accent); }
 .prose p { color: var(--muted); font-size: .95rem; }
 .prose p + p { margin-top: .75rem; }
 
+/* The stylesheet has no base <a> rule — every other link is styled through the
+   component it sits in (.nav-links a, .contact-item a, .card). A link in
+   flowing prose belonged to no component, so it fell back to the UA default:
+   #0000EE, which is 2.12:1 against the dark background and 1.81:1 once
+   visited. The underline stays: inside a paragraph, colour alone is not a
+   sufficient cue that something is a link. */
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-thickness .15s ease;
+}
+
+.prose a:hover { text-decoration-thickness: 2px; }
+
 .prose h2,
 .prose h3 {
   font-size: .95rem; font-weight: 700; color: var(--text);
