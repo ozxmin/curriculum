@@ -27,11 +27,10 @@ No dependencies, no bundler. Deploying is just publishing the repo root.
 index.html          The resume itself
 how-i-work.html     Case study: architectural guardrails for agentic coding
 projects.html       Work built outside employment
-my-stack.html       Tools and gear
 404.html            Not-found page (Netlify serves a root 404.html automatically)
 css/styles.css      All styling for every page, including the print stylesheet
-js/script.js        Disclosure widgets: the my-stack popover, the skill-tag
-                    evidence popover, hash-opened panels, and the print hook
+js/script.js        Disclosure widgets: the skill-tag evidence popover,
+                    hash-opened panels, and the diagram lightbox
 img/                Icons and the social-preview image
 ```
 
@@ -82,9 +81,9 @@ Not leftover clutter — each of these breaks if moved:
 All asset references are **root-absolute** (`/css/styles.css`, not `./styles.css`), on every
 page, with no exceptions. This is load-bearing rather than stylistic:
 
-- **Netlify serves each page at three URLs.** `my-stack.html` answers at `/my-stack.html`,
-  `/my-stack`, *and* `/my-stack/`. Relative paths resolve against the URL's directory, so on
-  that last one `./css/styles.css` becomes `/my-stack/css/styles.css` and 404s — a page that
+- **Netlify serves each page at three URLs.** `projects.html` answers at `/projects.html`,
+  `/projects`, *and* `/projects/`. Relative paths resolve against the URL's directory, so on
+  that last one `./css/styles.css` becomes `/projects/css/styles.css` and 404s — a page that
   still returns 200, just with no CSS and no JS. Absolute paths resolve identically at all
   three. Every page you add would otherwise need its own redirect rule to paper over this.
 - **`404.html` is served at arbitrary unmatched URLs.** At `/foo/bar/baz` a relative path
@@ -108,7 +107,7 @@ different sites in a tab strip.
 ## Duplication, on purpose
 
 There is no build step and no templating, so three things are copy-pasted across
-`index.html`, `my-stack.html`, and `404.html`:
+`index.html`, `how-i-work.html`, `projects.html`, and `404.html`:
 
 1. The icon `<link>` block and `theme-color` meta tags (marked with a `keep in sync` comment)
 2. The `<nav>` element
@@ -157,8 +156,6 @@ by design, not by configuration.
 - **Absolute URLs in metadata.** `og:image` and `canonical` are absolute and hardcoded to
   `https://career.ozmin.me`. If the domain ever changes, they need updating in every HTML
   file, plus `sitemap.xml` and `robots.txt`.
-- **The "More Details" section on `my-stack.html` is commented out**, waiting on real copy.
-  Uncommenting it is all that's needed — `js/script.js` requires no changes.
 - **`_headers` is Netlify-specific.** It exists only to serve `site.webmanifest` as
   `application/manifest+json`; Netlify defaults the unknown `.webmanifest` extension to
   `application/octet-stream`. If the site ever moves off Netlify, this needs re-doing in
