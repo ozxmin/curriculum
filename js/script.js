@@ -110,12 +110,19 @@ window.addEventListener('resize', () => {
   var tags = document.querySelectorAll('.tag[data-ev]');
   if (!tags.length) return;
 
+  // Not role="dialog": nothing here traps focus or is modal, and a dialog with
+  // no accessible name announces as an empty one. It is a disclosure whose
+  // content is swapped in, so it is wired as a live region the tags control.
   var panel = document.createElement('div');
   panel.id = 'evidence';
-  panel.setAttribute('role', 'dialog');
+  panel.setAttribute('aria-live', 'polite');
   panel.hidden = true;
   panel.innerHTML = '<div class="ev-term"></div><div class="ev-body"></div>';
   document.body.appendChild(panel);
+
+  tags.forEach(function (tag) {
+    tag.setAttribute('aria-controls', 'evidence');
+  });
 
   var term = panel.querySelector('.ev-term');
   var body = panel.querySelector('.ev-body');
@@ -134,9 +141,13 @@ window.addEventListener('resize', () => {
 
     active = tag;
     tag.setAttribute('aria-expanded', 'true');
+
+    // Expose the live region before filling it. Text written into a region that
+    // is still `hidden` is treated as initial content, not an update, and most
+    // screen readers stay silent.
+    panel.hidden = false;
     term.textContent = tag.textContent.trim();
     body.textContent = tag.dataset.ev;
-    panel.hidden = false;
     panel.classList.add('open');
     place(tag);
   }
