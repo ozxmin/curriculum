@@ -118,12 +118,20 @@ nav {
 .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
 /* SECTION */
+/* Sticky nav is 56px tall; without this an anchor jump hides the target under
+   it. Every deep-link destination needs this, not just <section> — the resume
+   is linked at .job and .mig granularity (/#job-chop, /#mig-agentic), and
+   those land at viewport top with the nav drawn over them otherwise. */
+section,
+.job,
+.mig {
+  scroll-margin-top: 72px;
+}
+
 section {
   max-width: 720px; margin: 0 auto;
   padding: 2rem 2rem;
   border-top: 1px solid var(--border);
-  /* Sticky nav is 56px tall; without this the anchor jump hides the heading under it. */
-  scroll-margin-top: 72px;
 }
 
 section h2 {
