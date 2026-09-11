@@ -119,29 +119,6 @@
 })();
 
 /* ============================================================
-   Print: expand everything
-   Saving the page as a PDF is the most likely thing a visitor does
-   with a CV. A collapsed <details> would silently drop its content
-   from that PDF, so open them all for the print and restore after.
-   ============================================================ */
-(function () {
-  var reopened = [];
-
-  window.addEventListener('beforeprint', function () {
-    reopened = [];
-    document.querySelectorAll('details:not([open])').forEach(function (panel) {
-      panel.open = true;
-      reopened.push(panel);
-    });
-  });
-
-  window.addEventListener('afterprint', function () {
-    reopened.forEach(function (panel) { panel.open = false; });
-    reopened = [];
-  });
-})();
-
-/* ============================================================
    Diagram lightbox
    The pipeline figure renders at prose width, too small to read its
    11px labels, so clicking it opens the same <picture> at its 1080px

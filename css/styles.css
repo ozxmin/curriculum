@@ -269,7 +269,6 @@ footer {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
-  border-radius: 4px;
 }
 
 /* ===========================================================
@@ -462,8 +461,7 @@ button.tag[aria-expanded="true"] { border-color: var(--accent); }
    The figure sits inside the prose column, so the 1080px artwork renders at
    roughly 640px and its 11px labels are not readable. That is on purpose: the
    figure is a thumbnail, and clicking it opens the same SVG at full size in a
-   <dialog>. Light and dark are two files swapped by <picture>; the dark source
-   is scoped to `screen` so printing falls back to the light one. */
+   <dialog>. Light and dark are two files swapped by <picture>. */
 .diagram { margin: 1.75rem 0 1.25rem; }
 
 /* The script strips the href and sets role="button", so the cursor and focus
@@ -561,86 +559,4 @@ button.tag[aria-expanded="true"] { border-color: var(--accent); }
     transition-duration: .01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-/* PRINT — "save as PDF" is the most likely action on a CV */
-@media print {
-  /* Force the light palette: dark-mode users would otherwise print white-on-black. */
-  :root {
-    --bg: #ffffff;
-    --bg2: #ffffff;
-    --text: #000000;
-    --muted: #333333;
-    --accent: #000000;
-    --border: #cccccc;
-    --tag-bg: #ffffff;
-    --tag-text: #000000;
-  }
-
-  @page { margin: 15mm; }
-
-  body {
-    background: #fff;
-    color: #000;
-    font-size: 11pt;
-    line-height: 1.45;
-  }
-
-  nav,
-  .hero-links,
-  .back-btn,
-  .skip-link { display: none !important; }
-
-  .hero { padding: 0 0 1rem; }
-  .hero h1 { font-size: 22pt; }
-  .hero p { font-size: 11pt; }
-
-  section,
-  footer,
-  .inner-page { padding-left: 0; padding-right: 0; max-width: none; }
-
-  section { padding-top: .75rem; padding-bottom: .25rem; }
-
-  .job { margin-bottom: 1rem; break-inside: avoid; page-break-inside: avoid; }
-  .edu, .skill-group { break-inside: avoid; page-break-inside: avoid; }
-
-  h1, h2 { break-after: avoid; page-break-after: avoid; }
-
-  .tag {
-    border: 1px solid #999;
-    background: #fff;
-    color: #000;
-  }
-
-  /* Paper has no hyperlinks — print the destination. */
-  a[href^="http"]::after {
-    content: " (" attr(href) ")";
-    font-size: 9pt;
-    color: #555;
-    word-break: break-all;
-  }
-
-  a[href^="mailto:"]::after,
-  a[href^="tel:"]::after { content: ""; }
-
-  /* Disclosure must never amputate the printed CV. js/script.js opens every
-     <details> on beforeprint; these rules make the expanded state print well. */
-  .caret,
-  .card-more,
-  #evidence { display: none !important; }
-
-  .mig > summary { padding: .3rem 0; }
-  .mig-body { border-left: none; padding: 0 0 .5rem; margin-left: 0; }
-  .mig, .card, .metric-row, .proj { break-inside: avoid; page-break-inside: avoid; }
-
-  .diagram { break-inside: avoid; page-break-inside: avoid; }
-  .diagram-zoom img { border-color: #ccc; }
-  .diagram-hint { display: none; }
-
-  .chip { border-color: #999; }
-  .card { border-color: #ccc; }
-  .job details > summary { color: #000; }
-  .prose code { background: #fff; border: 1px solid #ccc; }
-
-  a { color: #000; text-decoration: none; }
 }
