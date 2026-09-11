@@ -1,0 +1,137 @@
+<svg viewBox="0 0 1080 760" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>ios-arch-kit pipeline: from sample repo to guided Claude Code sessions (light)</title>
+<desc>Diagram in five stages. Build time: EssentialFeed sample repo is read through six extraction passes into notes files, gated by human review, then synthesized into CLAUDE.md and a skill. Artifacts: CLAUDE.md and the ios-architecture skill. Install time: install.sh symlinks the skill into Claude Code and Xcode. Run time: a fresh Swift project loads CLAUDE.md every turn and the skill on demand, producing generated code. Feedback loop: a 47-item eval rubric compares guided vs control runs and findings feed back into the kit.</desc>
+<defs>
+<marker id="arrowL" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="#666666"/>
+</marker>
+</defs>
+<style>
+text { font-family: system-ui, -apple-system, sans-serif; fill: #1a1a1a; }
+.stage-label { font-size: 12px; font-weight: 600; fill: #888888; letter-spacing: 0.06em; text-transform: uppercase; }
+.box { fill: #f5f5f5; stroke: #d0d0d0; stroke-width: 1; }
+.box-accent { fill: #f5f5f5; stroke: #0066cc; stroke-width: 1.5; }
+.title { font-size: 13px; font-weight: 600; }
+.sub { font-size: 11px; fill: #555555; }
+.edge { stroke: #666666; stroke-width: 1.4; fill: none; marker-end: url(#arrowL); }
+.gate { fill: #ebebeb; stroke: #999999; stroke-width: 1; stroke-dasharray: 4 3; }
+.divider { stroke: #d0d0d0; stroke-width: 1; stroke-dasharray: 2 4; }
+</style>
+
+<rect x="0" y="0" width="1080" height="760" fill="#ffffff"/>
+
+<text x="40" y="28" class="stage-label">Build time — six extraction passes</text>
+
+<rect x="40" y="44" width="150" height="52" rx="8" class="box"/>
+<text x="115" y="65" text-anchor="middle" class="title">Sample repo</text>
+<text x="115" y="81" text-anchor="middle" class="sub">EssentialFeed (read only)</text>
+
+<rect x="230" y="44" width="230" height="52" rx="8" class="box"/>
+<text x="345" y="65" text-anchor="middle" class="title">Passes 1–5</text>
+<text x="345" y="81" text-anchor="middle" class="sub">modules, composition, seams, tests, conventions</text>
+
+<rect x="500" y="44" width="190" height="52" rx="8" class="box"/>
+<text x="595" y="65" text-anchor="middle" class="title">Pass 5.5</text>
+<text x="595" y="81" text-anchor="middle" class="sub">old→new Swift mapping</text>
+
+<rect x="230" y="130" width="230" height="52" rx="8" class="box"/>
+<text x="345" y="151" text-anchor="middle" class="title">notes/*.md</text>
+<text x="345" y="167" text-anchor="middle" class="sub">[REPO] vs [SWIFT] marked</text>
+
+<rect x="500" y="130" width="190" height="52" rx="8" class="gate"/>
+<text x="595" y="151" text-anchor="middle" class="title">Human review gate</text>
+<text x="595" y="167" text-anchor="middle" class="sub">delete unrecognized claims</text>
+
+<rect x="740" y="130" width="190" height="52" rx="8" class="box-accent"/>
+<text x="835" y="151" text-anchor="middle" class="title">Pass 6 — synthesis</text>
+<text x="835" y="167" text-anchor="middle" class="sub">writes CLAUDE.md + skill</text>
+
+<path d="M190,70 H230" class="edge"/>
+<path d="M460,70 H500" class="edge"/>
+<path d="M345,96 V130" class="edge"/>
+<path d="M595,96 V130" class="edge"/>
+<path d="M460,156 H500" class="edge"/>
+<path d="M690,156 H740" class="edge"/>
+
+<line x1="0" y1="215" x2="1080" y2="215" class="divider"/>
+
+<text x="40" y="243" class="stage-label">Artifacts — the kit</text>
+
+<rect x="230" y="258" width="230" height="58" rx="8" class="box-accent"/>
+<text x="345" y="280" text-anchor="middle" class="title">CLAUDE.md</text>
+<text x="345" y="297" text-anchor="middle" class="sub">≤55 lines, loads every turn</text>
+<text x="345" y="311" text-anchor="middle" class="sub">rules only, no rationale</text>
+
+<rect x="500" y="258" width="230" height="58" rx="8" class="box-accent"/>
+<text x="615" y="280" text-anchor="middle" class="title">ios-architecture skill</text>
+<text x="615" y="297" text-anchor="middle" class="sub">SKILL.md ≤200 lines</text>
+<text x="615" y="311" text-anchor="middle" class="sub">+ reference/ for detail</text>
+
+<path d="M835,182 V240 Q835,258 780,258 Q680,258 615,258" class="edge" fill="none"/>
+<path d="M835,182 V240 Q835,258 500,258 Q400,258 345,258" class="edge" fill="none"/>
+
+<line x1="0" y1="345" x2="1080" y2="345" class="divider"/>
+
+<text x="40" y="373" class="stage-label">Install — once per machine</text>
+
+<rect x="230" y="388" width="150" height="52" rx="8" class="box"/>
+<text x="305" y="409" text-anchor="middle" class="title">install.sh</text>
+<text x="305" y="425" text-anchor="middle" class="sub">run manually by Ozmin</text>
+
+<rect x="440" y="380" width="190" height="34" rx="7" class="box"/>
+<text x="535" y="401" text-anchor="middle" class="sub">~/.claude/skills/</text>
+
+<rect x="440" y="424" width="190" height="34" rx="7" class="box"/>
+<text x="535" y="445" text-anchor="middle" class="sub">Xcode CodingAssistant/skills/</text>
+
+<path d="M380,405 H420 V397 H440" class="edge"/>
+<path d="M380,405 H420 V441 H440" class="edge"/>
+<path d="M615,316 V360 Q615,388 590,388" class="edge" fill="none"/>
+
+<line x1="0" y1="483" x2="1080" y2="483" class="divider"/>
+
+<text x="40" y="511" class="stage-label">Run time — a Swift project</text>
+
+<rect x="40" y="526" width="200" height="52" rx="8" class="box"/>
+<text x="140" y="547" text-anchor="middle" class="title">Fresh Xcode project</text>
+<text x="140" y="563" text-anchor="middle" class="sub">CLAUDE.md copied alongside</text>
+
+<rect x="290" y="526" width="200" height="52" rx="8" class="box"/>
+<text x="390" y="547" text-anchor="middle" class="title">Feature request</text>
+<text x="390" y="563" text-anchor="middle" class="sub">e.g. "load + cache API data"</text>
+
+<rect x="540" y="526" width="230" height="52" rx="8" class="box-accent"/>
+<text x="655" y="547" text-anchor="middle" class="title">Claude Code / Xcode agent</text>
+<text x="655" y="563" text-anchor="middle" class="sub">CLAUDE.md always; skill on demand</text>
+
+<rect x="820" y="526" width="210" height="52" rx="8" class="box"/>
+<text x="925" y="547" text-anchor="middle" class="title">Generated Swift code</text>
+<text x="925" y="563" text-anchor="middle" class="sub">seams, composition root, doubles</text>
+
+<path d="M240,552 H290" class="edge"/>
+<path d="M490,552 H540" class="edge"/>
+<path d="M770,552 H820" class="edge"/>
+<path d="M305,440 V500 Q305,526 140,526" class="edge" fill="none"/>
+<path d="M535,458 V500 Q535,526 655,526" class="edge" fill="none"/>
+
+<line x1="0" y1="610" x2="1080" y2="610" class="divider"/>
+
+<text x="40" y="638" class="stage-label">Feedback loop — eval</text>
+
+<rect x="230" y="653" width="230" height="52" rx="8" class="box"/>
+<text x="345" y="674" text-anchor="middle" class="title">47-item rubric</text>
+<text x="345" y="690" text-anchor="middle" class="sub">written before runs, control kept</text>
+
+<rect x="500" y="653" width="230" height="52" rx="8" class="box"/>
+<text x="615" y="674" text-anchor="middle" class="title">Guided vs. control runs</text>
+<text x="615" y="690" text-anchor="middle" class="sub">~90% vs 25%</text>
+
+<rect x="770" y="653" width="230" height="52" rx="8" class="box-accent"/>
+<text x="885" y="674" text-anchor="middle" class="title">Findings → fixes</text>
+<text x="885" y="690" text-anchor="middle" class="sub">back into CLAUDE.md / skill</text>
+
+<path d="M925,578 V620 Q925,653 730,674 Q615,674 460,679" class="edge" fill="none"/>
+<path d="M460,679 H500" class="edge"/>
+<path d="M730,679 H770" class="edge"/>
+<path d="M885,653 V440 Q885,300 780,286 Q690,286 615,286" class="edge" fill="none" stroke-dasharray="4 3"/>
+</svg>

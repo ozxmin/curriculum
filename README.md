@@ -27,11 +27,10 @@ No dependencies, no bundler. Deploying is just publishing the repo root.
 index.html          The resume itself
 how-i-work.html     Case study: architectural guardrails for agentic coding
 projects.html       Work built outside employment
-my-stack.html       Tools and gear
 404.html            Not-found page (Netlify serves a root 404.html automatically)
-css/styles.css      All styling for every page, including the print stylesheet
-js/script.js        Disclosure widgets: the my-stack popover, the skill-tag
-                    evidence popover, hash-opened panels, and the print hook
+css/styles.css      All styling for every page
+js/script.js        Disclosure widgets: the skill-tag evidence popover,
+                    hash-opened panels, and the diagram lightbox
 img/                Icons and the social-preview image
 ```
 
@@ -52,19 +51,17 @@ Anything load-bearing has to survive with every panel closed. If a fact only exi
 inside a `<details>`, a recruiter who expands nothing will never see it — which is most
 of them.
 
-L1 uses native `<details>` rather than the popover widget: keyboard support, screen-reader
-state, and find-in-page all come for free, and `open` is a single attribute to toggle for
-printing. The popover is kept for micro-content only — it is 22rem wide and cannot hold a
-paragraph.
+L1 uses native `<details>` rather than a JS widget: keyboard support, screen-reader state,
+and find-in-page all come for free. The `.tag[data-ev]` popover is kept for micro-content
+only — it is 20rem wide and cannot hold a paragraph.
 
-Two behaviours are wired in `js/script.js` and are easy to break by accident:
+One behaviour is wired in `js/script.js` and is easy to break by accident:
 
-- **`beforeprint` opens every `<details>`** and `afterprint` restores them. Without this,
-  a collapsed panel is silently missing from the PDF. See the print note below.
 - **The hash opens a panel.** `/#job-chop` or `/#mig-agentic` expands that panel instead of
   scrolling to a collapsed heading, so one claim can be linked directly from an email or an
-  application. Role `<div class="job">` blocks need their `id` for this, and `.job:target`
-  gives the highlight.
+  application. Role `<div class="job">` blocks need their `id` for this, `.job:target`
+  gives the highlight, and `scroll-margin-top` on `.job`/`.mig` keeps the target clear of
+  the sticky nav — without it the anchor jump lands the heading underneath it.
 
 ### Why some files are still at root
 
@@ -82,9 +79,9 @@ Not leftover clutter — each of these breaks if moved:
 All asset references are **root-absolute** (`/css/styles.css`, not `./styles.css`), on every
 page, with no exceptions. This is load-bearing rather than stylistic:
 
-- **Netlify serves each page at three URLs.** `my-stack.html` answers at `/my-stack.html`,
-  `/my-stack`, *and* `/my-stack/`. Relative paths resolve against the URL's directory, so on
-  that last one `./css/styles.css` becomes `/my-stack/css/styles.css` and 404s — a page that
+- **Netlify serves each page at three URLs.** `projects.html` answers at `/projects.html`,
+  `/projects`, *and* `/projects/`. Relative paths resolve against the URL's directory, so on
+  that last one `./css/styles.css` becomes `/projects/css/styles.css` and 404s — a page that
   still returns 200, just with no CSS and no JS. Absolute paths resolve identically at all
   three. Every page you add would otherwise need its own redirect rule to paper over this.
 - **`404.html` is served at arbitrary unmatched URLs.** At `/foo/bar/baz` a relative path
@@ -108,7 +105,7 @@ different sites in a tab strip.
 ## Duplication, on purpose
 
 There is no build step and no templating, so three things are copy-pasted across
-`index.html`, `my-stack.html`, and `404.html`:
+`index.html`, `how-i-work.html`, `projects.html`, and `404.html`:
 
 1. The icon `<link>` block and `theme-color` meta tags (marked with a `keep in sync` comment)
 2. The `<nav>` element
@@ -145,21 +142,17 @@ by design, not by configuration.
 
 ## Things worth knowing before editing
 
-- **The print stylesheet is load-bearing.** Saving the page as a PDF is the most likely
-  thing a visitor does with a resume. `@media print` in `css/styles.css` forces the light
-  palette, hides the nav, and expands the popovers into static text. If you restructure the
-  page, re-check `Cmd+P` in both light and dark mode.
-- **Print and progressive disclosure fight each other.** Collapsed `<details>` do not print.
-  The `beforeprint` hook in `js/script.js` opens them all and `afterprint` closes them again;
-  the print stylesheet then hides the carets and flattens the panels. If you add a new
-  disclosure, it inherits this for free — but if you ever replace `<details>` with a
-  JS-driven widget, the printed CV loses that content silently.
+- **There is no print stylesheet.** `@media print` and the `beforeprint`/`afterprint` hook
+  were removed deliberately. `Cmd+P` now falls back to browser defaults, which means a
+  collapsed `<details>` is silently absent from the PDF and a dark-mode reader may get the
+  dark palette on paper. If saving to PDF ever needs to be supported again, both pieces
+  have to come back together — the stylesheet alone would print collapsed panels.
 - **Absolute URLs in metadata.** `og:image` and `canonical` are absolute and hardcoded to
   `https://career.ozmin.me`. If the domain ever changes, they need updating in every HTML
   file, plus `sitemap.xml` and `robots.txt`.
-- **The "More Details" section on `my-stack.html` is commented out**, waiting on real copy.
-  Uncommenting it is all that's needed — `js/script.js` requires no changes.
-- **`_headers` is Netlify-specific.** It exists only to serve `site.webmanifest` as
-  `application/manifest+json`; Netlify defaults the unknown `.webmanifest` extension to
-  `application/octet-stream`. If the site ever moves off Netlify, this needs re-doing in
-  whatever the new host uses.
+- **`_headers` is Netlify-specific.** It carries the CSP and the other security headers,
+  the `application/manifest+json` content type for `site.webmanifest` (Netlify defaults the
+  unknown `.webmanifest` extension to `application/octet-stream`), and the asset cache
+  policy. If the site ever moves off Netlify, all of it needs re-doing in whatever the new
+  host uses. **The CSP names `cloud.umami.is` explicitly** — if the analytics provider or
+  its event endpoint ever changes, the policy has to change with it or events fail silently.

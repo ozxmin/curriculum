@@ -26,7 +26,7 @@
 <meta name="twitter:description" content="Built outside employment, and shipped: architecture guardrails for agentic coding, an LLM orchestration pipeline, and macOS tooling." />
 <meta name="twitter:image" content="https://career.ozmin.me/img/og-image.png" />
 
-<!-- Shared block: keep in sync with index.html, how-i-work.html, projects.html, my-stack.html, 404.html.
+<!-- Shared block: keep in sync with index.html, how-i-work.html, projects.html, 404.html.
      No build step by design, so this is duplicated on purpose. -->
 <!-- Icons -->
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -49,11 +49,10 @@
   <div class="nav-links">
     <a href="/how-i-work.html" data-umami-event="nav-how-i-work">How I Work</a>
     <a href="/projects.html" aria-current="page" data-umami-event="nav-projects">Projects</a>
-    <a href="/my-stack.html" data-umami-event="nav-my-stack">My Stack</a>
   </div>
 </nav>
 
-<main id="main" class="inner-page">
+<main id="main" tabindex="-1" class="inner-page">
   <a class="back-btn" href="/" data-umami-event="projects-back-home">← Back to résumé</a>
   <h1>Projects</h1>
   <p class="subtitle">Built outside employment, and shipped.</p>
@@ -64,6 +63,38 @@
     <div class="prose">
       <p>A portable kit that encodes iOS architectural conventions as machine-readable constraints an agent reads before writing code. Conventions were extracted from a production reference codebase across six structured passes under a hard evidentiary rule: every claim cites a real file path, nothing generalised from a single occurrence, no invented principles. Claims are tagged evidenced or extrapolated, and the ratio is tracked as a quality metric.</p>
       <p>Ships as an always-on specification under 60 lines, an architecture skill with a reference directory, an installer, and documentation of the extraction passes.</p>
+      <h3>How I know it works</h3>
+      <p>I evaluated the kit blind, guided against unguided.</p>
+
+      <figure class="diagram">
+        <!-- The anchor's accessible name has to stay short — it is a link, and its
+             name states where it goes. The diagram's actual description therefore
+             cannot live in the img alt (the anchor's name would override it), so it
+             sits in a visually-hidden block referenced by aria-describedby. -->
+        <a class="diagram-zoom" href="/img/ios_arch_kit_pipeline_light.svg"
+           aria-label="Open the pipeline diagram at full size"
+           aria-describedby="diagram-desc"
+           data-umami-event="projects-diagram-zoom">
+          <picture>
+            <source srcset="/img/ios_arch_kit_pipeline_dark.svg" media="screen and (prefers-color-scheme: dark)" />
+            <img src="/img/ios_arch_kit_pipeline_light.svg" width="1080" height="760" loading="lazy" decoding="async"
+                 alt="The ios-arch-kit pipeline, in five stages from extraction through to the eval feedback loop." />
+          </picture>
+        </a>
+        <figcaption>Extracted from a reference repo, installed once, read on every agent turn, and corrected by its own eval. <span class="diagram-hint">Click to enlarge.</span></figcaption>
+        <p id="diagram-desc" class="visually-hidden">The ios-arch-kit pipeline in five stages. Build time: the EssentialFeed sample repo is read by six extraction passes into notes files, gated by human review, then synthesised into CLAUDE.md and a skill. Artifacts: CLAUDE.md and the ios-architecture skill. Install: install.sh links the skill into Claude Code and Xcode. Run time: a fresh Swift project loads CLAUDE.md every turn and the skill on demand, producing generated code. Feedback loop: a 47-item rubric compares guided against control runs, and findings feed back into the kit.</p>
+      </figure>
+
+      <div class="metric-row">
+        <div class="metric"><div class="metric-val">~90%</div><div class="metric-lbl">conformance, guided</div></div>
+        <div class="metric"><div class="metric-val">~25%</div><div class="metric-lbl">conformance, unguided</div></div>
+        <div class="metric"><div class="metric-val">13 / 7 / 5</div><div class="metric-lbl">predictions confirmed / refuted / partial</div></div>
+      </div>
+      <p>The scorecard matters as much as the headline number. I ran the kit's architectural predictions against a real async/await migration in the reference repository, then turned the hit rate into a calibration rule applied to the remaining claims. Predicting where you will be wrong, and pricing it, is the part that generalises.</p>
+
+      <h3>When it goes wrong</h3>
+      <p>During the extraction I caught a fabricated statistic that had already propagated through three hops of generated files. I logged it as evidence for mandatory human review gates. I also caught my own error: I had briefed the agents with the wrong baseline commit, twice. Two agents flagged it, and the real baseline was established by CI-workflow blob match plus file modification times.</p>
+      <p>Both incidents are in the record on purpose. “How do you handle AI reliability?” deserves a real answer with a root cause and a process change, not a reassurance.</p>
       <p><strong>A defended position.</strong> Storage ports are synchronous <code>throws</code>; network ports are <code>async throws</code>. A store protocol never says <code>async</code>, never says <code>@MainActor</code>, and never names a queue — asynchrony is injected above it, and the composition root absorbs the churn. Verified against the repository's real concurrency migration: the seam modelling a domain capability survived; the seam modelling a concurrency mechanism was deleted by the new mechanism.</p>
       <p><a href="/how-i-work.html" data-umami-event="projects-to-work">How the enforcement layers and the blind evaluation work →</a></p>
     </div>

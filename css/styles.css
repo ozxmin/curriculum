@@ -2,7 +2,7 @@
   --bg: #ffffff;
   --bg2: #f4f4f5;
   --text: #09090b;
-  --muted: #71717a;
+  --muted: #6b6b73;
   --accent: #2563eb;
   --border: #e4e4e7;
   --tag-bg: #eff6ff;
@@ -118,12 +118,20 @@ nav {
 .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
 /* SECTION */
+/* Sticky nav is 56px tall; without this an anchor jump hides the target under
+   it. Every deep-link destination needs this, not just <section> — the resume
+   is linked at .job and .mig granularity (/#job-chop, /#mig-agentic), and
+   those land at viewport top with the nav drawn over them otherwise. */
+section,
+.job,
+.mig {
+  scroll-margin-top: 72px;
+}
+
 section {
   max-width: 720px; margin: 0 auto;
   padding: 2rem 2rem;
   border-top: 1px solid var(--border);
-  /* Sticky nav is 56px tall; without this the anchor jump hides the heading under it. */
-  scroll-margin-top: 72px;
 }
 
 section h2 {
@@ -226,138 +234,16 @@ footer {
   max-width: 720px; margin: 0 auto;
 }
 
-.inline-details {
-  position: relative;
-  margin-top: 2rem;
-}
-
-.inline-line {
-  position: relative;
-  z-index: 1;
-  max-width: 42rem;
-  color: var(--muted);
-  line-height: 1.9;
-  margin-bottom: 1rem;
-}
-
-.inline-trigger {
-  position: relative;
-  z-index: 2;
-  display: inline-block;
-  padding: .08rem .5rem .12rem;
-  margin: 0 .08rem;
-  border: 1px solid rgba(37, 99, 235, 0.14);
-  border-radius: 999px;
-  background: rgba(37, 99, 235, 0.04);
-  color: var(--accent);
-  font: inherit;
-  font-weight: 600;
-  line-height: 1.5;
-  cursor: pointer;
-  transition: background .18s ease, border-color .18s ease, transform .18s ease;
-  vertical-align: baseline;
-}
-
-.inline-trigger:hover {
-  background: rgba(37, 99, 235, 0.07);
-  border-color: rgba(37, 99, 235, 0.22);
-}
-
-.inline-trigger:active {
-  transform: translateY(1px);
-}
-
-.inline-trigger::after {
-  content: '▾';
-  display: inline-block;
-  margin-left: .25rem;
-  font-size: .68rem;
-  transform: translateY(-1px);
-  transition: transform .2s ease;
-}
-
-.inline-trigger[aria-expanded="true"] {
-  background: rgba(37, 99, 235, 0.08);
-  border-color: rgba(37, 99, 235, 0.28);
-}
-
-.inline-trigger[aria-expanded="true"]::after {
-  transform: rotate(180deg) translateY(-1px);
-}
-
-.inline-panel {
+/* Available to assistive tech, absent from the visual layout. Used for the
+   diagram's long description, which is far too long for a visible caption. */
+.visually-hidden {
   position: absolute;
-  z-index: 30;
-  left: 0;
-  top: 0;
-  width: min(22rem, 78vw);
-  padding: 0.9rem 0.9rem 0.7rem;
-  border: 1px solid rgba(15, 23, 42, 0.06);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 12px 22px rgba(15, 23, 42, 0.08), 0 4px 10px rgba(15, 23, 42, 0.04);
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, calc(-100% - 12px)) scale(0.98);
-  transition: opacity .18s ease, transform .18s ease;
-}
-
-@media (prefers-color-scheme: dark) {
-  .inline-panel {
-    background: rgba(17, 17, 19, 0.92);
-    border-color: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22), 0 4px 12px rgba(0, 0, 0, 0.14);
-  }
-}
-
-.inline-panel::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: -7px;
-  width: 12px;
-  height: 12px;
-  background: inherit;
-  border-right: 1px solid rgba(15, 23, 42, 0.06);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
-  transform: translateX(-50%) rotate(45deg);
-}
-
-.inline-panel.open {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%, calc(-100% - 12px)) scale(1);
-}
-
-.inline-panel-close {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  width: 1.5rem;
-  height: 1.5rem;
-  border: none;
-  border-radius: 999px;
-  background: rgba(24, 24, 27, 0.04);
-  color: var(--muted);
-  font-size: 1.05rem;
-  line-height: 1;
-  cursor: pointer;
-  transition: background .18s ease, color .18s ease;
-}
-
-.inline-panel-close:hover {
-  background: rgba(24, 24, 27, 0.07);
-  color: var(--text);
-}
-
-.inline-panel p {
-  color: var(--muted);
-  font-size: .9rem;
-  line-height: 1.6;
-  margin: 0;
-  padding-right: 1.25rem;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* SKIP LINK */
@@ -383,25 +269,6 @@ footer {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
-  border-radius: 4px;
-}
-
-.inline-trigger:focus-visible,
-.inline-panel-close:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-/* MY STACK */
-.stack-group { margin-bottom: 1.5rem; }
-
-.inline-details-heading {
-  font-size: .85rem;
-  font-weight: 600;
-  color: var(--muted);
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-  letter-spacing: .05em;
 }
 
 /* ===========================================================
@@ -556,7 +423,24 @@ button.tag[aria-expanded="true"] { border-color: var(--accent); }
 .prose p { color: var(--muted); font-size: .95rem; }
 .prose p + p { margin-top: .75rem; }
 
-.prose h2 {
+/* The stylesheet has no base <a> rule — every other link is styled through the
+   component it sits in (.nav-links a, .contact-item a, .card). A link in
+   flowing prose belonged to no component, so it fell back to the UA default:
+   #0000EE, which is 2.12:1 against the dark background and 1.81:1 once
+   visited. The underline stays: inside a paragraph, colour alone is not a
+   sufficient cue that something is a link. */
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-thickness .15s ease;
+}
+
+.prose a:hover { text-decoration-thickness: 2px; }
+
+.prose h2,
+.prose h3 {
   font-size: .95rem; font-weight: 700; color: var(--text);
   margin: 1.75rem 0 .5rem;
   text-transform: none; letter-spacing: normal;
@@ -589,6 +473,96 @@ button.tag[aria-expanded="true"] { border-color: var(--accent); }
   .mig-where { grid-column: 1 / -1; margin-top: -.4rem; }
 }
 
+/* PIPELINE DIAGRAM — projects.html.
+   The figure sits inside the prose column, so the 1080px artwork renders at
+   roughly 640px and its 11px labels are not readable. That is on purpose: the
+   figure is a thumbnail, and clicking it opens the same SVG at full size in a
+   <dialog>. Light and dark are two files swapped by <picture>. */
+.diagram { margin: 1.75rem 0 1.25rem; }
+
+/* The script strips the href and sets role="button", so the cursor and focus
+   affordances have to be stated here rather than inherited from :link. */
+.diagram-zoom { display: block; cursor: zoom-in; border-radius: 12px; }
+
+.diagram-zoom img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color .2s;
+}
+
+.diagram-zoom:hover img,
+.diagram-zoom:focus-visible img { border-color: var(--accent); }
+
+.diagram-zoom:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.diagram figcaption {
+  font-size: .75rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-top: .6rem;
+}
+
+.diagram-hint { color: var(--accent); }
+
+/* Full-size overlay. <dialog> earns its place here: focus trapping, Escape to
+   close and top-layer stacking all come free. The artwork is pinned to its
+   1080px design width so it stays legible and pans on a small screen, rather
+   than being shrunk back down to the size the thumbnail already is. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(96vw, 1140px);
+  max-width: none;
+  /* height must be definite for the auto margins to centre it: with height
+     auto and inset 0, the box stretches to fill and the margins resolve to
+     zero, so max-height then clamps it against the top-left corner. */
+  height: fit-content;
+  max-height: 92vh;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+.lightbox::backdrop { background: rgba(0, 0, 0, .72); }
+
+/* Fallback for browsers without <dialog>: position the panel and fake the
+   backdrop with a spread shadow, so the overlay still covers the page. */
+.lightbox.is-fallback {
+  display: block;
+  z-index: 999;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .72);
+}
+
+.lightbox-scroll {
+  overflow: auto;
+  max-height: 92vh;
+  overscroll-behavior: contain;
+}
+
+.lightbox-scroll img { display: block; width: 1080px; max-width: none; height: auto; }
+
+.lightbox-close {
+  position: absolute;
+  top: .6rem; right: .6rem;
+  width: 2rem; height: 2rem;
+  display: flex; align-items: center; justify-content: center;
+  font: inherit; font-size: 1.15rem; line-height: 1;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.lightbox-close:hover { border-color: var(--accent); color: var(--accent); }
+
 /* MOTION */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -601,112 +575,4 @@ button.tag[aria-expanded="true"] { border-color: var(--accent); }
     transition-duration: .01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-/* PRINT — "save as PDF" is the most likely action on a CV */
-@media print {
-  /* Force the light palette: dark-mode users would otherwise print white-on-black. */
-  :root {
-    --bg: #ffffff;
-    --bg2: #ffffff;
-    --text: #000000;
-    --muted: #333333;
-    --accent: #000000;
-    --border: #cccccc;
-    --tag-bg: #ffffff;
-    --tag-text: #000000;
-  }
-
-  @page { margin: 15mm; }
-
-  body {
-    background: #fff;
-    color: #000;
-    font-size: 11pt;
-    line-height: 1.45;
-  }
-
-  nav,
-  .hero-links,
-  .back-btn,
-  .skip-link,
-  .inline-panel-close { display: none !important; }
-
-  .hero { padding: 0 0 1rem; }
-  .hero h1 { font-size: 22pt; }
-  .hero p { font-size: 11pt; }
-
-  section,
-  footer,
-  .inner-page { padding-left: 0; padding-right: 0; max-width: none; }
-
-  section { padding-top: .75rem; padding-bottom: .25rem; }
-
-  .job { margin-bottom: 1rem; break-inside: avoid; page-break-inside: avoid; }
-  .edu, .skill-group { break-inside: avoid; page-break-inside: avoid; }
-
-  h1, h2 { break-after: avoid; page-break-after: avoid; }
-
-  .tag {
-    border: 1px solid #999;
-    background: #fff;
-    color: #000;
-  }
-
-  /* Expand popovers into static, readable text instead of hiding them off-canvas. */
-  .inline-panel {
-    position: static;
-    display: block;
-    opacity: 1;
-    pointer-events: auto;
-    transform: none;
-    width: auto;
-    background: #fff;
-    border: 1px solid #ccc;
-    box-shadow: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    margin: .5rem 0;
-    break-inside: avoid;
-  }
-
-  .inline-panel::after { display: none; }
-
-  .inline-trigger {
-    border: none;
-    background: none;
-    padding: 0;
-    font-weight: 700;
-    color: #000;
-  }
-
-  .inline-trigger::after { display: none; }
-
-  /* Paper has no hyperlinks — print the destination. */
-  a[href^="http"]::after {
-    content: " (" attr(href) ")";
-    font-size: 9pt;
-    color: #555;
-    word-break: break-all;
-  }
-
-  a[href^="mailto:"]::after,
-  a[href^="tel:"]::after { content: ""; }
-
-  /* Disclosure must never amputate the printed CV. js/script.js opens every
-     <details> on beforeprint; these rules make the expanded state print well. */
-  .caret,
-  .card-more,
-  #evidence { display: none !important; }
-
-  .mig > summary { padding: .3rem 0; }
-  .mig-body { border-left: none; padding: 0 0 .5rem; margin-left: 0; }
-  .mig, .card, .metric-row, .proj { break-inside: avoid; page-break-inside: avoid; }
-
-  .chip { border-color: #999; }
-  .card { border-color: #ccc; }
-  .job details > summary { color: #000; }
-  .prose code { background: #fff; border: 1px solid #ccc; }
-
-  a { color: #000; text-decoration: none; }
 }
